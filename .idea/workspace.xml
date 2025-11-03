@@ -4,19 +4,68 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58f4935f-6afb-41e6-9d32-25f18d99e26b" name="Changes" comment="" />
+    <list default="true" id="58f4935f-6afb-41e6-9d32-25f18d99e26b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/PublicacaoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/UsuarioController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/LoginDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/PublicacaoDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/UsuarioDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/service/FamiliaEducaApiClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/service/exception/ApiServiceException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/SessaoUsuario.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/MainFrame.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/MainFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/components/BotaoCustomizado.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/components/BotaoCustomizado.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/dica/TelaDicasPanel.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/dica/TelaDicasPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/publicacao/ItemPublicacaoPanel.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/publicacao/ItemPublicacaoPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/publicacao/TelaFeedPanel.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/publicacao/TelaFeedPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/usuario/TelaCadastroPanel.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/usuario/TelaCadastroPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DanyAraujo0&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DanyAraujo0/familiaeduca-swing-ui.git&quot;,
+    &quot;accountId&quot;: &quot;35c242e5-23ec-4a7b-9510-a0c4f514bf95&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="34vSYDuRFw1wXvbnTKmZOFmWglv" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -26,11 +75,13 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="SharedIndexes">
