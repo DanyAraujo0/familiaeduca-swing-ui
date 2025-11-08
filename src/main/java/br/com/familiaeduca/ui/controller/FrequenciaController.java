@@ -8,7 +8,7 @@ import br.com.familiaeduca.ui.view.sistema.FrequenciaPanel;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
-public class FrequenciaController {
+public class FrequenciaController{
 
     private final FrequenciaPanel view;
     private final FamiliaEducaApiClient apiClient;
@@ -29,7 +29,7 @@ public class FrequenciaController {
 
     // Lógica de permissão (habilita/desabilita botões)
     private void configurarPermissoes() {
-        view.getBtnAddPresenca().setEnabled(!sessao.isAluno());
+        view.getBtnAddPresenca().setEnabled(!sessao.isProfessor());
     }
 
     // Lógica de carregamento (substitui loadCSVIntoModel)

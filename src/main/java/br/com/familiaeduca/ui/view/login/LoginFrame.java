@@ -1,4 +1,3 @@
-// No ficheiro .java (a lógica)
 package br.com.familiaeduca.ui.view.login;
 
 import javax.swing.*;
@@ -6,29 +5,29 @@ import java.awt.*;
 
 public class LoginFrame extends JFrame {
 
-    // Pessoas B/C: Criem esta classe como "GUI Form (JFrame)"
-    // No "GUI Designer" do IntelliJ, adicione um JTabbedPane (nome: tabs)
-
-    private JTabbedPane tabs; // Este deve ser o nome do componente no GUI Designer
+    private JPanel mainPanel; // Você PRECISA de um painel raiz no .form
+    private JTabbedPane tabs;
 
     public LoginFrame() {
-        initComponents(); // O IntelliJ cria este método
+        // NÃO CHAME initComponents(); O IntelliJ faz isso sozinho.
+
+        // É CRUCIAL dizer ao JFrame qual é o seu conteúdo principal.
+        // O 'mainPanel' deve ser o painel raiz que você criou no GUI Designer.
+        setContentPane(mainPanel);
 
         setTitle("Família Educa - Portal");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(640, 480);
         setLocationRelativeTo(null);
 
-        // Adiciona os painéis (que também vamos criar) às abas
-        tabs.add("Login", new LoginPanel(this)); // Passa a si mesmo para o painel
-        tabs.add("Quem Somos", new QuemSomosPanel());
-        tabs.add("Fale Conosco", new FaleConoscoPanel());
-
-        // Nota: O add(tabs) já é feito pelo GUI designer se o JTabbedPane
-        // for o componente principal do vosso JFrame.
+        // Agora sim, pode adicionar coisas às abas
+        // (Certifique-se que LoginPanel existe e aceita 'this' no construtor)
+        tabs.add("Login", new LoginPanel(this));
 
         setVisible(true);
     }
 
-    // ... (initComponents() gerado pelo IntelliJ) ...
+    // O IntelliJ pode pedir para criar este método se você escolher
+    // a opção "Generate main method" nas configurações do GUI Designer,
+    // mas por padrão, não precisa dele aqui.
 }

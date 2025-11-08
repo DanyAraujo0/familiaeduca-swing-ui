@@ -4,30 +4,54 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58f4935f-6afb-41e6-9d32-25f18d99e26b" name="Changes" comment="adicionando estrutura de telas">
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/FrequenciaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/Frequencia/FrequenciaPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/Frequencia/FrequenciaPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/info/QuemSomosPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/info/QuemSomosPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/FrequenciaPainel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/FrequenciaPainel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java" afterDir="false" />
+    <list default="true" id="58f4935f-6afb-41e6-9d32-25f18d99e26b" name="Changes" comment="adicionando telas de login e cadastro e outras funcionalidades">
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/CheckListItemDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/FrequenciaDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/MatriculaDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/ReuniaoDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/AvisosPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/CadastroUsuariosPanel.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/CadastroUsuariosPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/ChecklistPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/FrequenciaPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/MatriculaPanel.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/MatriculaPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/NotasPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/ReunioesPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/FrequenciaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/FrequenciaController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/PublicacaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/CadastroUsuariosController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/DicaDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/NotaDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/LoginDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/LoginDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/PublicacaoDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/AvisoDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/TokenDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/TokenDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/UsuarioDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/UsuarioDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/service/FamiliaEducaApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/service/FamiliaEducaApiClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/SessaoUsuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/SessaoUsuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/UiConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/MainFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/Frequencia/FrequenciaPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/FrequenciaPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/Frequencia/FrequenciaPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/MainFrame.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/NotasPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/MainFrame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/dica/TelaDicasPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/AvisosPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/dica/TelaDicasPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/info/QuemSomosPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/ReunioesPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/info/QuemSomosPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/publicacao/ItemPublicacaoPanel.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/publicacao/ItemPublicacaoPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/publicacao/TelaFeedPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/ChecklistPanel.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/publicacao/TelaFeedPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/FrequenciaPainel.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/FrequenciaPainel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/usuario/TelaCadastroPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/usuario/TelaCadastroPanel.form" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +66,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -69,6 +98,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
@@ -78,7 +108,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
 }</component>
   <component name="SharedIndexes">
@@ -104,12 +134,32 @@
       <option name="project" value="LOCAL" />
       <updated>1762136105255</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="adicionando estrutura de telas">
+      <option name="closed" value="true" />
+      <created>1762300363430</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1762300363430</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="criando arquitetura de pastas" />
     <MESSAGE value="adicionando estrutura de telas" />
-    <option name="LAST_COMMIT_MESSAGE" value="adicionando estrutura de telas" />
+    <MESSAGE value="adicionando telas de login e cadastro e outras funcionalidades" />
+    <option name="LAST_COMMIT_MESSAGE" value="adicionando telas de login e cadastro e outras funcionalidades" />
   </component>
 </project>

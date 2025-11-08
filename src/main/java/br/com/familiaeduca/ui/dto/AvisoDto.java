@@ -1,4 +1,4 @@
 package br.com.familiaeduca.ui.dto;
 
-public class PublicacaoDto {
+public class AvisoDto {
 }

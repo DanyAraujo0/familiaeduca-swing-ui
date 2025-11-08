@@ -17,7 +17,7 @@ public class FrequenciaPanel extends JPanel {
     private DefaultTableModel tableModel;
 
     public FrequenciaPanel() {
-        initComponents(); // Gerado pelo IntelliJ
+        // REMOVIDO: initComponents();
 
         configurarTabela();
 
