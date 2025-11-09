@@ -6,7 +6,9 @@ import br.com.familiaeduca.ui.util.SessaoUsuario;
 import br.com.familiaeduca.ui.view.sistema.FrequenciaPanel;
 
 import javax.swing.table.DefaultTableModel;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 public class FrequenciaController{
 
@@ -23,7 +25,7 @@ public class FrequenciaController{
     // Chamado pela View assim que ela é criada
     public void inicializar() {
         configurarPermissoes();
-        carregarDadosTabela();
+        //carregarDadosTabela();
         configurarAcoes();
     }
 
@@ -33,13 +35,11 @@ public class FrequenciaController{
     }
 
     // Lógica de carregamento (substitui loadCSVIntoModel)
-    public void carregarDadosTabela() {
+/*    public void carregarDadosTabela() {
         DefaultTableModel model = view.getTabelaFrequenciaModel();
         model.setRowCount(0); // Limpa a tabela
 
         try {
-            // [PESSOA A] O apiClient.getFrequencia deve ser implementado
-            // A API já deve filtrar os dados (só do aluno, ou todos)
             List<FrequenciaDto> frequencias = apiClient.getFrequencia(sessao.getToken());
 
             for (FrequenciaDto freq : frequencias) {
@@ -54,25 +54,38 @@ public class FrequenciaController{
             view.exibirMensagem("Erro ao carregar frequência: " + e.getMessage());
         }
     }
-
+*/
     // Lógica de Ação (substitui o ActionListener)
     private void configurarAcoes() {
         view.getBtnAddPresenca().addActionListener(e -> adicionarPresenca());
     }
 
     private void adicionarPresenca() {
-        String aluno = view.perguntar("Nome do aluno:");
-        String data = view.perguntar("Data (yyyy-mm-dd):");
-        String presente = view.perguntar("Presente? (Sim/Não):");
+        String matriculaStr = view.perguntar("Matrícula do aluno:");
+        String dataStr = view.perguntar("Data (yyyy-mm-dd):");
+        String presenteStr = view.perguntar("Presente? (Sim/Não):");
+        String turmaIdStr = view.perguntar("ID da turma:");
 
-        if (aluno != null && data != null && presente != null) {
+        if (matriculaStr != null && dataStr != null && presenteStr != null && turmaIdStr != null) {
+            try {
+                int matricula = Integer.parseInt(matriculaStr);
+                LocalDate data = LocalDate.parse(dataStr);
+                boolean presente = presenteStr.equalsIgnoreCase("sim");
+                UUID turmaId = UUID.fromString(turmaIdStr);
 
-            // [PESSOA A] Criar o FrequenciaDto e o método addFrequencia
-            // FrequenciaDto novoDto = new FrequenciaDto(aluno, data, presente);
-            // apiClient.addFrequencia(sessao.getToken(), novoDto);
+                // Cria DTO compatível com o backend
+                FrequenciaDto dto = new FrequenciaDto(matricula, data, presente, turmaId);
 
-            view.exibirMensagem("Presença adicionada com sucesso!");
-            carregarDadosTabela(); // Recarrega a tabela
+                // Chama o backend
+                apiClient.addFrequencia(sessao.getToken(), dto);
+
+                view.exibirMensagem("Presença adicionada com sucesso!");
+               // carregarDadosTabela();
+
+            } catch (Exception e) {
+                view.exibirMensagem("Erro ao adicionar presença: " + e.getMessage());
+            }
         }
     }
+
 }

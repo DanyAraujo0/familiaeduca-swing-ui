@@ -2,27 +2,42 @@ package br.com.familiaeduca.ui.view.login;
 
 import javax.swing.*;
 import java.awt.*;
+import br.com.familiaeduca.ui.view.login.LoginPanel;
+import br.com.familiaeduca.ui.view.login.CadastroDiretorPanel;
 
 public class LoginFrame extends JFrame {
 
-    private JPanel mainPanel;
-    private JTabbedPane tabs;
+    private JPanel currentPanel;
 
     public LoginFrame() {
-        setContentPane(mainPanel); // já é suficiente
-
-        setTitle("Família Educa - Portal");
+        setTitle("Família Educa - Acesso");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(640, 480);
+        setSize(900, 600);
         setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
 
-        // Exemplo: adicionando a aba de login
-        tabs.add("Login", new LoginPanel(this));
-
-        // Exemplo: depois adicionaremos a aba de cadastro
-        // tabs.add("Cadastro", new CadastroUsuarioPanel());
-
-        setVisible(true);
+        mostrarLoginPanel();
     }
 
+    // Mostra o painel de login
+    public void mostrarLoginPanel() {
+        trocarPainel(new LoginPanel(this));
+    }
+
+    // Mostra o painel de cadastro de diretor
+    public void mostrarCadastroDiretorPanel() {
+        trocarPainel(new CadastroDiretorPanel(this));
+    }
+
+    private void trocarPainel(JPanel novoPainel) {
+        if (currentPanel != null) remove(currentPanel);
+        currentPanel = novoPainel;
+        add(currentPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+/* // Testando individualmente
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
+    }*/
 }

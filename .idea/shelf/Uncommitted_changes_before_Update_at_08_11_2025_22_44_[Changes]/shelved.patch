@@ -1,0 +1,232 @@
+Index: src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// No ficheiro .java\r\npackage br.com.familiaeduca.ui.view.sistema;\r\n\r\nimport br.com.familiaeduca.ui.dto.UsuarioDto;\r\nimport br.com.familiaeduca.ui.util.SessaoUsuario;\r\nimport javax.swing.*;\r\nimport java.awt.*;\r\n\r\npublic class SistemaFrame extends JFrame {\r\n\r\n    private JTabbedPane tabs; // Componente criado no GUI Designer\r\n\r\n    public SistemaFrame() {\r\n        initComponents(); // Gerado pelo IntelliJ\r\n\r\n        UsuarioDto user = SessaoUsuario.getInstance().getUsuarioLogado();\r\n\r\n        setTitle(\"Sistema - \" + user.getTipo() + \" (\" + user.getNome() + \")\");\r\n        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);\r\n        setSize(900, 600);\r\n        setLocationRelativeTo(null);\r\n\r\n        // Adiciona os painéis das abas\r\n        tabs.add(\"Checklist\", new ChecklistPanel());\r\n        tabs.add(\"Frequência\", new FrequenciaPanel());\r\n        tabs.add(\"Notas\", new NotasPanel());\r\n        tabs.add(\"Matrícula\", new MatriculaPanel());\r\n    }\r\n\r\n    // ... (initComponents() gerado pelo IntelliJ) ...\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java b/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java
+--- a/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java	(revision 2bac1d009104416d42582ce508cbc94f6e5bd76a)
++++ b/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java	(date 1762652163801)
+@@ -4,11 +4,14 @@
+ import br.com.familiaeduca.ui.dto.UsuarioDto;
+ import br.com.familiaeduca.ui.util.SessaoUsuario;
+ import javax.swing.*;
+-import java.awt.*;
+ 
+ public class SistemaFrame extends JFrame {
+ 
+     private JTabbedPane tabs; // Componente criado no GUI Designer
++    private JPanel panel1;
++    private JTable Avisos;
++    private JButton novoAvisoButton;
++    private JButton apagarAvisoButton;
+ 
+     public SistemaFrame() {
+         initComponents(); // Gerado pelo IntelliJ
+@@ -27,5 +30,9 @@
+         tabs.add("Matrícula", new MatriculaPanel());
+     }
+ 
++    private void createUIComponents() {
++        // TODO: place custom component creation code here
++    }
++
+     // ... (initComponents() gerado pelo IntelliJ) ...
+ }
+\ No newline at end of file
+Index: src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.form
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<form xmlns=\"http://www.intellij.com/uidesigner/form/\" version=\"1\" bind-to-class=\"br.com.familiaeduca.ui.view.sistema.SistemaFrame\">\r\n  <grid id=\"27dc6\" row-count=\"1\" column-count=\"1\" layout-manager=\"GridLayoutManager\">\r\n    <margin top=\"0\" left=\"0\" bottom=\"0\" right=\"0\"/>\r\n    <constraints>\r\n      <xy x=\"20\" y=\"20\" width=\"500\" height=\"400\"/>\r\n      <grid row=\"0\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"3\" hsize-policy=\"3\" anchor=\"0\" fill=\"3\" indent=\"0\" use-parent-layout=\"false\"/>\r\n    </constraints>\r\n    <properties/>\r\n    <border type=\"none\"/>\r\n    <children/>\r\n  </grid>\r\n</form>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.form b/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.form
+--- a/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.form	(revision 2bac1d009104416d42582ce508cbc94f6e5bd76a)
++++ b/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.form	(date 1762652303746)
+@@ -1,13 +1,55 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="br.com.familiaeduca.ui.view.sistema.SistemaFrame">
+-  <grid id="27dc6" row-count="1" column-count="1" layout-manager="GridLayoutManager">
++  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+     <margin top="0" left="0" bottom="0" right="0"/>
+     <constraints>
+-      <xy x="20" y="20" width="500" height="400"/>
+-      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
++      <xy x="6" y="3" width="303" height="336"/>
+     </constraints>
+     <properties/>
+     <border type="none"/>
+-    <children/>
++    <children>
++      <scrollpane id="b56d1">
++        <constraints>
++          <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
++        </constraints>
++        <properties>
++          <background color="-1245214"/>
++        </properties>
++        <border type="none"/>
++        <children>
++          <component id="88dcb" class="javax.swing.JTable" binding="Avisos">
++            <constraints/>
++            <properties>
++              <autoResizeMode value="1"/>
++              <background color="-2360577"/>
++              <enabled value="false"/>
++              <gridColor color="-196865"/>
++              <selectionBackground color="-15388929"/>
++            </properties>
++          </component>
++        </children>
++      </scrollpane>
++      <vspacer id="a77ea">
++        <constraints>
++          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
++        </constraints>
++      </vspacer>
++      <component id="8190f" class="javax.swing.JButton" binding="novoAvisoButton" default-binding="true">
++        <constraints>
++          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
++        </constraints>
++        <properties>
++          <text value="Novo Aviso"/>
++        </properties>
++      </component>
++      <component id="c1a24" class="javax.swing.JButton" binding="apagarAvisoButton" default-binding="true">
++        <constraints>
++          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
++        </constraints>
++        <properties>
++          <text value="Apagar Aviso"/>
++        </properties>
++      </component>
++    </children>
+   </grid>
+ </form>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"58f4935f-6afb-41e6-9d32-25f18d99e26b\" name=\"Changes\" comment=\"adicionando estrutura de telas\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/FrequenciaController.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/Frequencia/FrequenciaPanel.form\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/Frequencia/FrequenciaPanel.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/info/QuemSomosPanel.form\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/info/QuemSomosPanel.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.form\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/FrequenciaPainel.form\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/FrequenciaPainel.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.form\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/Main.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/LoginController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/LoginController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/LoginDto.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/LoginDto.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/TokenDto.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/TokenDto.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/UsuarioDto.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/UsuarioDto.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/service/FamiliaEducaApiClient.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/service/FamiliaEducaApiClient.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/SessaoUsuario.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/SessaoUsuario.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/UiConstants.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/UiConstants.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/MainFrame.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/MainFrame.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.form\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.form\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;DanyAraujo0&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/DanyAraujo0/familiaeduca-swing-ui.git&quot;,\r\n    &quot;accountId&quot;: &quot;35c242e5-23ec-4a7b-9510-a0c4f514bf95&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 5\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"34vSYDuRFw1wXvbnTKmZOFmWglv\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;\r\n  }\r\n}</component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"58f4935f-6afb-41e6-9d32-25f18d99e26b\" name=\"Changes\" comment=\"\" />\r\n      <created>1762093383347</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1762093383347</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"criando arquitetura de pastas\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1762136105255</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1762136105255</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"criando arquitetura de pastas\" />\r\n    <MESSAGE value=\"adicionando estrutura de telas\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"adicionando estrutura de telas\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 2bac1d009104416d42582ce508cbc94f6e5bd76a)
++++ b/.idea/workspace.xml	(date 1762651275515)
+@@ -5,29 +5,10 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="58f4935f-6afb-41e6-9d32-25f18d99e26b" name="Changes" comment="adicionando estrutura de telas">
+-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/FrequenciaController.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/Frequencia/FrequenciaPanel.form" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/Frequencia/FrequenciaPanel.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/info/QuemSomosPanel.form" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/info/QuemSomosPanel.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.form" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/FrequenciaPainel.form" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/FrequenciaPainel.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.form" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/Main.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/LoginController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/LoginDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/LoginDto.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/TokenDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/TokenDto.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/UsuarioDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/dto/UsuarioDto.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/service/FamiliaEducaApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/service/FamiliaEducaApiClient.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/SessaoUsuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/SessaoUsuario.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/UiConstants.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/MainFrame.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.form" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/TelaLoginPanel.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.form" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -50,12 +31,12 @@
+     &quot;assignee&quot;: &quot;DanyAraujo0&quot;
+   }
+ }</component>
+-  <component name="GithubPullRequestsUISettings">{
+-  &quot;selectedUrlAndAccountId&quot;: {
+-    &quot;url&quot;: &quot;https://github.com/DanyAraujo0/familiaeduca-swing-ui.git&quot;,
+-    &quot;accountId&quot;: &quot;35c242e5-23ec-4a7b-9510-a0c4f514bf95&quot;
+-  }
+-}</component>
++  <component name="GithubPullRequestsUISettings"><![CDATA[{
++  "selectedUrlAndAccountId": {
++    "url": "https://github.com/DanyAraujo0/familiaeduca-swing-ui.git",
++    "accountId": "5ebbccb7-37ec-40da-816f-881d074f0d23"
++  }
++}]]></component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 5
+ }</component>
+@@ -67,20 +48,21 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "ModuleVcsDetector.initialDetectionPerformed": "true",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
++    "RunOnceActivity.git.unshallow": "true",
++    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
++    "git-widget-placeholder": "main",
++    "kotlin-language-version-configured": "true",
++    "project.structure.last.edited": "Project",
++    "project.structure.proportion": "0.15",
++    "project.structure.side.proportion": "0.2",
++    "settings.editor.selected.configurable": "preferences.fileTypes"
+   }
+-}</component>
++}]]></component>
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+@@ -112,4 +94,8 @@
+     <MESSAGE value="adicionando estrutura de telas" />
+     <option name="LAST_COMMIT_MESSAGE" value="adicionando estrutura de telas" />
+   </component>
++  <component name="XSLT-Support.FileAssociations.UIState">
++    <expand />
++    <select />
++  </component>
+ </project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_21\" default=\"true\" project-jdk-name=\"21\" project-jdk-type=\"JavaSDK\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 2bac1d009104416d42582ce508cbc94f6e5bd76a)
++++ b/.idea/misc.xml	(date 1762643572023)
+@@ -8,5 +8,5 @@
+       </list>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="21" project-jdk-type="JavaSDK" />
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_25" default="true" project-jdk-name="openjdk-25 (2)" project-jdk-type="JavaSDK" />
+ </project>
+\ No newline at end of file

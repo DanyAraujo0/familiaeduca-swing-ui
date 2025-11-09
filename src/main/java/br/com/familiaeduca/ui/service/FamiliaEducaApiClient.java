@@ -1,22 +1,18 @@
 package br.com.familiaeduca.ui.service;
 
-import br.com.familiaeduca.ui.dto.*; // Importa todos os DTOs
+import br.com.familiaeduca.ui.dto.*;
 import com.google.gson.*;
 import java.lang.reflect.Type;
 import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.net.http.*;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.List; // O import que faltava!
+import java.util.List;
 
 public class FamiliaEducaApiClient {
 
-    // URL base da vossa API (Backend Spring Boot)
-    private static final String BASE_URL = "http://localhost:8080"; // Removi o /api base para ficar mais flexível
+    private static final String BASE_URL = "http://localhost:8080";
     private final HttpClient client;
     private final Gson gson;
 
@@ -25,34 +21,28 @@ public class FamiliaEducaApiClient {
                 .connectTimeout(Duration.ofSeconds(10))
                 .build();
 
-        // Configura Gson para entender LocalDate (yyyy-MM-dd)
+        // Configura Gson para suportar LocalDate
         this.gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new JsonSerializer<LocalDate>() {
-                    @Override
-                    public JsonElement serialize(LocalDate src, Type typeOfSrc, JsonSerializationContext context) {
-                        return new JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE));
-                    }
-                })
-                .registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
-                    @Override
-                    public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                        return LocalDate.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_DATE);
-                    }
-                })
+                .registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>)
+                        (src, typeOfSrc, context) -> new JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE)))
+                .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>)
+                        (json, typeOfT, context) -> LocalDate.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_DATE))
                 .create();
     }
 
     // =================================================================================
-    // AUTENTICAÇÃO & PERFIL
+    // LOGIN
     // =================================================================================
 
+    /**
+     * Faz login de Diretor, Professor ou Responsável.
+     * O tipo de usuário é inferido automaticamente pelo endpoint.
+     */
     public TokenDto fazerLogin(String email, String senha) throws Exception {
-        LoginDto loginDto = new LoginDto(email, senha);
-        String jsonBody = gson.toJson(loginDto);
+        String jsonBody = gson.toJson(new LoginDto(email, senha));
 
-        // NOTA: Ajuste a URL se a sua API usar /api/auth/login ou só /login
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/login"))
+                .uri(URI.create(BASE_URL + "/usuarios/login"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .build();
@@ -60,15 +50,85 @@ public class FamiliaEducaApiClient {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() == 200) {
-            return gson.fromJson(response.body(), TokenDto.class);
+            // Exemplo de resposta esperada do backend:
+            // { "token": "jwt...", "tipo": "diretor" }
+            TokenDto tokenDto = gson.fromJson(response.body(), TokenDto.class);
+            return tokenDto;
         } else {
-            throw new RuntimeException("Falha no login: " + response.statusCode());
+            throw new RuntimeException("Falha no login: " + response.statusCode() + " - " + response.body());
         }
     }
 
-    // Assumindo que existe um endpoint que retorna os dados do usuário logado
+    // =================================================================================
+    // DIRETORES
+    // =================================================================================
+
+    public UsuarioDto cadastrarDiretor(DiretorDto dto) throws Exception {
+        String jsonBody = gson.toJson(dto);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/diretores"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 201 || response.statusCode() == 200) {
+            return gson.fromJson(response.body(), UsuarioDto.class);
+        } else {
+            throw new RuntimeException("Erro ao cadastrar diretor: " + response.statusCode() + "\n" + response.body());
+        }
+    }
+
+    // =================================================================================
+    // PROFESSORES
+    // =================================================================================
+
+    public UsuarioDto cadastrarProfessor(ProfessorDto dto, String token) throws Exception {
+        String jsonBody = gson.toJson(dto);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/professores"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + token)
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 201 || response.statusCode() == 200) {
+            return gson.fromJson(response.body(), UsuarioDto.class);
+        } else {
+            throw new RuntimeException("Erro ao cadastrar professor: " + response.statusCode() + "\n" + response.body());
+        }
+    }
+
+    // =================================================================================
+    // RESPONSÁVEIS
+    // =================================================================================
+
+    public UsuarioDto cadastrarResponsavel(ResponsavelDto dto, String token) throws Exception {
+        String jsonBody = gson.toJson(dto);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/responsaveis"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + token)
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 201 || response.statusCode() == 200) {
+            return gson.fromJson(response.body(), UsuarioDto.class);
+        } else {
+            throw new RuntimeException("Erro ao cadastrar responsável: " + response.statusCode() + "\n" + response.body());
+        }
+    }
+
+    // =================================================================================
+    // PERFIL (Se existir endpoint /usuarios/me)
+    // =================================================================================
+
     public UsuarioDto getMeuPerfil(String token) throws Exception {
-        // NOTA: Ajuste se a API usar outro endpoint para isso (ex: /usuarios/me)
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/usuarios/me"))
                 .header("Authorization", "Bearer " + token)
@@ -76,108 +136,27 @@ public class FamiliaEducaApiClient {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
         if (response.statusCode() == 200) {
             return gson.fromJson(response.body(), UsuarioDto.class);
         } else {
-            // Se não houver endpoint /me, você terá que pegar os dados do Token JWT
-            throw new RuntimeException("Erro ao buscar perfil: " + response.statusCode());
+            throw new RuntimeException("Erro ao buscar perfil: " + response.statusCode() + " - " + response.body());
         }
     }
+    public void addFrequencia(String token, FrequenciaDto dto) throws Exception {
+        String jsonBody = gson.toJson(dto);
 
-    // =================================================================================
-    // FREQUÊNCIA (Aluno: visualiza | Professor: edita)
-    // =================================================================================
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/frequencias"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + token)
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
 
-    public List<FrequenciaDto> getFrequencia(String token) throws Exception {
-        // [PESSOA A] Implementar chamada GET para /frequencias (ou /alunos/{id}/frequencia)
-        System.out.println("CHAMADA FAKE: getFrequencia");
-        return Collections.emptyList();
-    }
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-    public void adicionarFrequencia(String token, FrequenciaDto dto) throws Exception {
-        // [PESSOA A] Implementar chamada POST para /frequencias
-        System.out.println("CHAMADA FAKE: adicionarFrequencia: " + gson.toJson(dto));
-    }
-
-    // =================================================================================
-    // NOTAS (Aluno: visualiza | Professor: edita)
-    // =================================================================================
-
-    // Você precisará criar a classe NotaDto.java
-    public List<Object> getNotas(String token) throws Exception {
-        // [PESSOA A] Implementar chamada GET para /notas
-        System.out.println("CHAMADA FAKE: getNotas");
-        return Collections.emptyList();
-    }
-
-    public void adicionarNota(String token, Object notaDto) throws Exception {
-        // [PESSOA A] Implementar chamada POST para /notas
-        System.out.println("CHAMADA FAKE: adicionarNota");
-    }
-
-    // =================================================================================
-    // MATRÍCULA (Aluno/Professor: visualiza)
-    // =================================================================================
-
-    // Você precisará criar a classe MatriculaDto.java
-    public Object getMatricula(String token) throws Exception {
-        // [PESSOA A] Implementar chamada GET para /matriculas/minha (ou similar)
-        System.out.println("CHAMADA FAKE: getMatricula");
-        return null;
-    }
-
-    // =================================================================================
-    // CHECKLIST (Aluno: altera | Professor: visualiza e dá retorno)
-    // =================================================================================
-
-    // Você precisará criar a classe ChecklistDto.java
-    public List<Object> getChecklist(String token) throws Exception {
-        // [PESSOA A] Implementar chamada GET para /checklist
-        System.out.println("CHAMADA FAKE: getChecklist");
-        return Collections.emptyList();
-    }
-
-    public void atualizarChecklist(String token, Object checklistDto) throws Exception {
-        // [PESSOA A] Implementar chamada PUT para /checklist/{id}
-        System.out.println("CHAMADA FAKE: atualizarChecklist");
-    }
-
-    // =================================================================================
-    // REUNIÕES (Aluno/Professor: solicita e aceita)
-    // =================================================================================
-
-    // Você precisará criar a classe ReuniaoDto.java
-    public List<Object> getReunioes(String token) throws Exception {
-        // [PESSOA A] Implementar chamada GET para /reunioes
-        System.out.println("CHAMADA FAKE: getReunioes");
-        return Collections.emptyList();
-    }
-
-    public void solicitarReuniao(String token, Object reuniaoDto) throws Exception {
-        // [PESSOA A] Implementar chamada POST para /reunioes
-        System.out.println("CHAMADA FAKE: solicitarReuniao");
-    }
-
-    public void aceitarReuniao(String token, Long reuniaoId) throws Exception {
-        // [PESSOA A] Implementar chamada PATCH/PUT para /reunioes/{id}/aceitar
-        System.out.println("CHAMADA FAKE: aceitarReuniao ID: " + reuniaoId);
-    }
-
-    // =================================================================================
-    // AVISOS (Aluno: visualiza | Professor: edita)
-    // =================================================================================
-
-    // Você precisará criar a classe AvisoDto.java
-    public List<Object> getAvisos(String token) throws Exception {
-        // [PESSOA A] Implementar chamada GET para /avisos
-        System.out.println("CHAMADA FAKE: getAvisos");
-        return Collections.emptyList();
-    }
-
-    public void criarAviso(String token, Object avisoDto) throws Exception {
-        // [PESSOA A] Implementar chamada POST para /avisos
-        System.out.println("CHAMADA FAKE: criarAviso");
+        if (response.statusCode() != 201 && response.statusCode() != 200) {
+            throw new RuntimeException("Erro ao adicionar frequência: " + response.statusCode() + " - " + response.body());
+        }
     }
 
 }

@@ -7,7 +7,6 @@ import com.formdev.flatlaf.FlatLightLaf; // Importe o FlatLaf
 import javax.swing.*;
 
 public class Main {
-
     public static void main(String[] args) {
         // 1. ATIVAR O LOOK AND FEEL (TEMA)
         try {
