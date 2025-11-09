@@ -2,7 +2,7 @@
 package br.com.familiaeduca.ui.view.sistema;
 
 import br.com.familiaeduca.ui.controller.FrequenciaController;
-import br.com.familiaeduca.ui.util.UiConstants;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,6 +15,8 @@ public class FrequenciaPanel extends JPanel {
 
     private FrequenciaController controller;
     private DefaultTableModel tableModel;
+    private JComboBox cbTurma;
+    private JButton salvarChamadaButton;
 
     public FrequenciaPanel() {
         // REMOVIDO: initComponents();

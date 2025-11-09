@@ -9,7 +9,6 @@ import java.awt.*;
 public class SistemaFrame extends JFrame {
 
     private JTabbedPane tabs; // Componente criado no GUI Designer
-    private JButton button1;
 
     // No construtor de SistemaFrame.java
     public SistemaFrame() {
