@@ -8,12 +8,10 @@ public class CadastroUsuariosPanel extends JPanel {
     private JButton btnCadastrarDiretor;
     private JButton btnCadastrarProfessor;
     private JButton btnCadastrarResponsavel;
-    // Adicione outros componentes (tabelas, campos) conforme necessário
 
     private CadastroUsuariosController controller;
 
     public CadastroUsuariosPanel() {
-        // Lembre-se: SEM initComponents() aqui!
 
         this.controller = new CadastroUsuariosController(this);
         this.controller.inicializar();

@@ -8,8 +8,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class FrequenciaPanel extends JPanel {
 
-    // Pessoas B/C: Criem esta classe como "GUI Form (JPanel)"
-    // Adicionem os componentes no GUI Designer e deem estes nomes:
     private JTable tblFrequencia;
     private JButton btnAddPresenca;
 
@@ -17,7 +15,6 @@ public class FrequenciaPanel extends JPanel {
     private DefaultTableModel tableModel;
 
     public FrequenciaPanel() {
-        // REMOVIDO: initComponents();
 
         configurarTabela();
 
@@ -47,6 +44,4 @@ public class FrequenciaPanel extends JPanel {
         return JOptionPane.showInputDialog(this, msg);
     }
 
-    // ... (initComponents() gerado pelo IntelliJ) ...
-    // ... (não se esqueça de aplicar styleButton(btnAddPresenca)) ...
 }

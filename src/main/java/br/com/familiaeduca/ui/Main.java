@@ -17,6 +17,7 @@ public class Main {
         }
         // Aplica temas globais
         UiTheme.setup();
+
         // A primeira tela a aparecer deve ser o LoginFrame
         SwingUtilities.invokeLater(() -> {
             LoginFrame loginFrame = new LoginFrame();

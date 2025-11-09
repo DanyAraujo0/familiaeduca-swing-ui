@@ -1,19 +1,16 @@
-// No ficheiro .java
 package br.com.familiaeduca.ui.view.sistema;
 
 import br.com.familiaeduca.ui.dto.UsuarioDto;
 import br.com.familiaeduca.ui.util.SessaoUsuario;
 import javax.swing.*;
-import java.awt.*;
 
 public class SistemaFrame extends JFrame {
 
-    private JTabbedPane tabs; // Componente criado no GUI Designer
-    private JButton button1;
+    private JTabbedPane tabs;
+    private JPanel mainPanel;
 
     // No construtor de SistemaFrame.java
     public SistemaFrame() {
-        // ... (configurações iniciais) ...
 
         UsuarioDto user = SessaoUsuario.getInstance().getUsuarioLogado();
 
