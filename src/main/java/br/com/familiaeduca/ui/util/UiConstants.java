@@ -10,7 +10,9 @@ public class UiConstants {
     public static void styleButton(JButton b) {
         b.setBackground(BLUE);
         b.setForeground(Color.WHITE);
-        b.setFont(new Font("Arial", Font.PLAIN, 12));
+        b.setFont(new Font("Segoe UI", Font.BOLD, 13));
         b.setFocusPainted(false);
+        b.setBorderPainted(false);
+        b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 }

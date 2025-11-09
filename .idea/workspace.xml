@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58f4935f-6afb-41e6-9d32-25f18d99e26b" name="Changes" comment="adicionando telas de login e cadastro e outras funcionalidades">
+    <list default="true" id="58f4935f-6afb-41e6-9d32-25f18d99e26b" name="Changes" comment="add tela login">
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/UiTheme.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +43,9 @@
     &quot;accountId&quot;: &quot;35c242e5-23ec-4a7b-9510-a0c4f514bf95&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -111,7 +114,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762646195843</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add tela login">
+      <option name="closed" value="true" />
+      <created>1762653298138</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1762653298138</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -129,6 +140,7 @@
     <MESSAGE value="criando arquitetura de pastas" />
     <MESSAGE value="adicionando estrutura de telas" />
     <MESSAGE value="adicionando telas de login e cadastro e outras funcionalidades" />
-    <option name="LAST_COMMIT_MESSAGE" value="adicionando telas de login e cadastro e outras funcionalidades" />
+    <MESSAGE value="add tela login" />
+    <option name="LAST_COMMIT_MESSAGE" value="add tela login" />
   </component>
 </project>
