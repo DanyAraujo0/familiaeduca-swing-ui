@@ -5,8 +5,7 @@ import br.com.familiaeduca.ui.util.UiConstants;
 import javax.swing.*;
 
 public class LoginPanel extends JPanel {
-    // Pessoas B/C: Criem esta classe como "GUI Form (JPanel)"
-    // Adicionem os componentes no GUI Designer e deem estes nomes:
+    private JPanel mainPanel;
     private JTextField txtUsuario;
     private JPasswordField pwdSenha;
     private JButton btnEntrar;
@@ -14,24 +13,20 @@ public class LoginPanel extends JPanel {
     private LoginController controller;
 
     public LoginPanel(LoginFrame ownerFrame) {
+        this.controller = new LoginController(this);
 
-        this.controller = new LoginController(this); // Remova o ', ownerFrame'
+        // Adiciona o conteúdo principal do .form dentro deste JPanel
+        setLayout(new java.awt.BorderLayout());
+        add(mainPanel, java.awt.BorderLayout.CENTER);
 
-        // Delega a ação do botão ao controller
         btnEntrar.addActionListener(e -> controller.realizarLogin());
-
-        // Aplica o estilo
         UiConstants.styleButton(btnEntrar);
     }
 
-    // Métodos "Get" para o Controller ler os dados
     public String getUsuario() { return txtUsuario.getText().trim(); }
     public String getSenha() { return new String(pwdSenha.getPassword()).trim(); }
 
-    // Método para o Controller mostrar feedback
     public void exibirMensagem(String mensagem) {
         JOptionPane.showMessageDialog(this, mensagem);
     }
-
-    // ... (initComponents() gerado pelo IntelliJ) ...
 }
