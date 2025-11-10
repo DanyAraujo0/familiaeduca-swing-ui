@@ -2,8 +2,8 @@ package br.com.familiaeduca.ui.view.login;
 
 import javax.swing.*;
 import java.awt.*;
-import br.com.familiaeduca.ui.view.login.LoginPanel;
-import br.com.familiaeduca.ui.view.login.CadastroDiretorPanel;
+
+import br.com.familiaeduca.ui.view.usuario.CadastroDiretorPanel;
 
 public class LoginFrame extends JFrame {
 

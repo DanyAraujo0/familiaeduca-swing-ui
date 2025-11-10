@@ -42,7 +42,7 @@ public class FamiliaEducaApiClient {
         String jsonBody = gson.toJson(new LoginDto(email, senha));
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/usuarios/login"))
+                .uri(URI.create(BASE_URL + "/login"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .build();
@@ -142,6 +142,7 @@ public class FamiliaEducaApiClient {
             throw new RuntimeException("Erro ao buscar perfil: " + response.statusCode() + " - " + response.body());
         }
     }
+
     public void addFrequencia(String token, FrequenciaDto dto) throws Exception {
         String jsonBody = gson.toJson(dto);
 

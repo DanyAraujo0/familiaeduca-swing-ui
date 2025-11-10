@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class UiConstants {
 
-    public static final Color BLUE = new Color(0x00, 0x33, 0x66);
+    public static final Color BLUE = new Color(0x2568CC);
     public static final Color GRAY_BG = new Color(245, 248, 250);
     public static final Font FONT_REGULAR = new Font("Segoe UI", Font.PLAIN, 14);
     public static final Font FONT_BOLD = new Font("Segoe UI", Font.BOLD, 14);

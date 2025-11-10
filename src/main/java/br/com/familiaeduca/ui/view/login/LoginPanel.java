@@ -35,7 +35,21 @@ public class LoginPanel extends JPanel {
         // Margens menores (40) para deixar os campos mais largos
         formPanel.setBorder(BorderFactory.createEmptyBorder(50, 40, 50, 40));
 
+/*
+        //JLabel sombra = new JLabel("Seja bem-vindo!");
+        sombra.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        sombra.setForeground(new Color(0,0,0,100));
+        sombra.setBounds(102, 102, 300, 40);
+*/
         JLabel lblTitulo = new JLabel("Seja bem-vindo!");
+        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        lblTitulo.setForeground(new Color(0x2568CC));
+        lblTitulo.setBounds(100, 100, 300, 40);
+        /*
+        panel.setLayout(null);
+        panel.add(sombra);
+        panel.add(lblTitulo);*/
+
         lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
         lblTitulo.setForeground(UiConstants.BLUE);
         lblTitulo.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -58,7 +72,7 @@ public class LoginPanel extends JPanel {
         UiConstants.styleButton(btnEntrar);
         btnEntrar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        btnCadastrarDiretor = new JButton("Cadastrar Diretor");
+        btnCadastrarDiretor = new JButton("Cadastrar Usuário");
         UiConstants.styleButton(btnCadastrarDiretor);
 
         // Botão secundário com cor diferente (opcional, mas ajuda a distinguir)
@@ -68,6 +82,7 @@ public class LoginPanel extends JPanel {
 
         // --- Montagem ---
         formPanel.add(Box.createVerticalGlue());
+        //formPanel.add(sombra);
         formPanel.add(lblTitulo);
         formPanel.add(Box.createRigidArea(new Dimension(0, 40)));
 

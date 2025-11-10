@@ -1,7 +1,10 @@
 package br.com.familiaeduca.ui.controller;
 
 import br.com.familiaeduca.ui.util.SessaoUsuario;
-import br.com.familiaeduca.ui.view.sistema.CadastroUsuariosPanel;
+import br.com.familiaeduca.ui.view.usuario.CadastroUsuariosPanel;
+import br.com.familiaeduca.ui.view.usuario.CadastroFrame;
+import br.com.familiaeduca.ui.view.usuario.CadastroResponsavelPanel;
+import br.com.familiaeduca.ui.view.usuario.CadastroProfessorPanel;
 
 public class CadastroUsuariosController {
 
@@ -20,25 +23,23 @@ public class CadastroUsuariosController {
 
     private void configurarPermissoes() {
         boolean isDiretor = sessao.isDiretor();
-
-        // SE for Diretor -> Vê tudo (true)
-        // SE NÃO for Diretor (é Professor) -> Não vê (false)
-        view.getBtnCadastrarDiretor().setVisible(isDiretor);
         view.getBtnCadastrarProfessor().setVisible(isDiretor);
-
-        // Responsável todos (Diretor e Professor) podem ver
         view.getBtnCadastrarResponsavel().setVisible(true);
     }
 
     private void configurarAcoes() {
-        view.getBtnCadastrarDiretor().addActionListener(e -> abrirTelaCadastro("DIRETOR"));
-        view.getBtnCadastrarProfessor().addActionListener(e -> abrirTelaCadastro("PROFESSOR"));
-        view.getBtnCadastrarResponsavel().addActionListener(e -> abrirTelaCadastro("RESPONSAVEL"));
+        view.getBtnCadastrarProfessor().addActionListener(e -> abrirCadastro("PROFESSOR"));
+        view.getBtnCadastrarResponsavel().addActionListener(e -> abrirCadastro("RESPONSAVEL"));
     }
 
-    private void abrirTelaCadastro(String tipoUsuario) {
-        // Lógica para abrir um JDialog ou mudar de tela para o formulário de cadastro
-        System.out.println("Abrindo cadastro para: " + tipoUsuario);
-        // Exemplo: new FormularioUsuarioDialog(tipoUsuario).setVisible(true);
+    private void abrirCadastro(String tipo) {
+        switch (tipo) {
+            case "RESPONSAVEL":
+                new CadastroFrame(new CadastroResponsavelPanel(null)).setVisible(true);
+                break;
+            case "PROFESSOR":
+                new CadastroFrame(new CadastroProfessorPanel(null)).setVisible(true);
+                break;
+        }
     }
 }

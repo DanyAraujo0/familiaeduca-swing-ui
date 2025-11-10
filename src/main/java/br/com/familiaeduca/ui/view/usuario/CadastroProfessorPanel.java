@@ -1,26 +1,32 @@
-package br.com.familiaeduca.ui.view.login;
+package br.com.familiaeduca.ui.view.usuario;
 
-import br.com.familiaeduca.ui.controller.CadastroDiretorController;
+import br.com.familiaeduca.ui.controller.ProfessorController;
 import br.com.familiaeduca.ui.util.UiConstants;
 import br.com.familiaeduca.ui.util.UiImages;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class CadastroDiretorPanel extends JPanel {
+public class CadastroProfessorPanel extends JPanel {
 
     private JTextField txtNome;
     private JTextField txtEmail;
     private JPasswordField txtSenha;
     private JTextField txtTelefone;
-    private CadastroDiretorController controller;
+    private final CadastroFrame frame;
+    private final ProfessorController controller;
 
-    public CadastroDiretorPanel(LoginFrame frame) {
-        this.controller = new CadastroDiretorController(this);
+    public CadastroProfessorPanel(CadastroFrame frame) {
+        this.frame = frame;
+        this.controller = new ProfessorController(this);
+        inicializar();
+    }
+
+    private void inicializar() {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
-        // --- Logo (Esquerda) - Igual ao LoginPanel ---
+        // --- Painel Azul com Logo (Esquerda) ---
         JLabel logoLabel = new JLabel(new ImageIcon(getClass().getResource(UiImages.LOGO)));
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
         logoLabel.setOpaque(true);
@@ -28,18 +34,17 @@ public class CadastroDiretorPanel extends JPanel {
         logoLabel.setPreferredSize(new Dimension(380, 0));
         add(logoLabel, BorderLayout.WEST);
 
-        // --- Formulário (Centro) ---
+        // --- Painel do Formulário (Direita) ---
         JPanel formPanel = new JPanel();
         formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
         formPanel.setBackground(Color.WHITE);
-        formPanel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(40, 50, 40, 50));
 
-        JLabel lblTitulo = new JLabel("Novo Diretor");
-        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        JLabel lblTitulo = new JLabel("Novo Professor");
+        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 26));
         lblTitulo.setForeground(UiConstants.BLUE);
         lblTitulo.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // --- Criação dos campos usando um método auxiliar para limpar o código ---
         txtNome = criarCampoTexto();
         txtEmail = criarCampoTexto();
         txtSenha = new JPasswordField();
@@ -51,23 +56,23 @@ public class CadastroDiretorPanel extends JPanel {
         UiConstants.styleButton(btnCadastrar);
         btnCadastrar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        JButton btnVoltar = new JButton("Voltar para Login");
+        JButton btnVoltar = new JButton("Voltar ao Sistema");
         UiConstants.styleButton(btnVoltar);
-        btnVoltar.setBackground(new Color(200, 200, 200)); // Cinza para botão secundário
+        btnVoltar.setBackground(new Color(200, 200, 200));
         btnVoltar.setForeground(Color.BLACK);
         btnVoltar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // --- Montagem do Formulário ---
+        // --- Montagem ---
         formPanel.add(Box.createVerticalGlue());
         formPanel.add(lblTitulo);
-        formPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+        formPanel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         adicionarCampo(formPanel, "Nome Completo:", txtNome);
         adicionarCampo(formPanel, "E-mail Institucional:", txtEmail);
         adicionarCampo(formPanel, "Senha:", txtSenha);
         adicionarCampo(formPanel, "Telefone:", txtTelefone);
 
-        formPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        formPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         formPanel.add(btnCadastrar);
         formPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         formPanel.add(btnVoltar);
@@ -77,10 +82,10 @@ public class CadastroDiretorPanel extends JPanel {
 
         // --- Eventos ---
         btnCadastrar.addActionListener(e -> controller.cadastrar());
-        btnVoltar.addActionListener(e -> frame.mostrarLoginPanel());
+        btnVoltar.addActionListener(e -> frame.voltarAoSistema());
     }
 
-    // Métodos auxiliares para reduzir repetição de código UI
+    // Métodos auxiliares
     private JTextField criarCampoTexto() {
         JTextField txt = new JTextField();
         txt.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
@@ -93,10 +98,10 @@ public class CadastroDiretorPanel extends JPanel {
         lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(lbl);
         panel.add(campo);
-        panel.add(Box.createRigidArea(new Dimension(0, 15))); // Espaçamento padrão entre campos
+        panel.add(Box.createRigidArea(new Dimension(0, 15)));
     }
 
-    // Getters para o Controller
+    // Getters
     public String getNome() { return txtNome.getText().trim(); }
     public String getEmail() { return txtEmail.getText().trim(); }
     public String getSenha() { return new String(txtSenha.getPassword()).trim(); }

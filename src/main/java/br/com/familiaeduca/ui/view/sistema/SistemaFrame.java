@@ -5,6 +5,9 @@ import br.com.familiaeduca.ui.util.SessaoUsuario;
 import br.com.familiaeduca.ui.util.UiConstants;
 import br.com.familiaeduca.ui.util.UiImages;
 import br.com.familiaeduca.ui.view.login.LoginFrame;
+import br.com.familiaeduca.ui.view.usuario.CadastroFrame;
+import br.com.familiaeduca.ui.view.usuario.CadastroProfessorPanel;
+import br.com.familiaeduca.ui.view.usuario.CadastroResponsavelPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -24,7 +27,8 @@ public class SistemaFrame extends JFrame {
 
         setTitle("Família Educa - Sistema [" + userProfile + "]");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1100, 700);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setVisible(true);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
@@ -100,7 +104,16 @@ public class SistemaFrame extends JFrame {
 
         if (user == null || user.isDiretor()) {
             adicionarSeparadorMenu("ADMINISTRAÇÃO");
-            adicionarOpcaoMenu("Cadastrar Usuários", new CadastroUsuariosPanel(), false);
+
+            JButton btnCadastroProfessor = criarBotaoMenu("Cadastrar Professor");
+            btnCadastroProfessor.addActionListener(e -> new CadastroFrame(new CadastroProfessorPanel(null)));
+            sideMenu.add(btnCadastroProfessor);
+            sideMenu.add(Box.createRigidArea(new Dimension(0, 8)));
+
+            JButton btnCadastroResponsavel = criarBotaoMenu("Cadastrar Responsável");
+            btnCadastroResponsavel.addActionListener(e -> new CadastroFrame(new CadastroResponsavelPanel(null)));
+            sideMenu.add(btnCadastroResponsavel);
+            sideMenu.add(Box.createRigidArea(new Dimension(0, 8)));
         }
 
         // --- Botão de Sair ---
@@ -157,6 +170,28 @@ public class SistemaFrame extends JFrame {
             this.dispose();
             SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
         }
+    }
+    private void abrirJanelaCadastroUsuarios() {
+        // Aqui criamos uma janela principal de cadastro (com abas ou menus)
+        JFrame frame = new JFrame("Família Educa - Cadastros");
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(this);
+        frame.setLayout(new GridLayout(3, 1, 10, 10));
+
+        JButton btnProfessor = new JButton("Cadastrar Professor");
+        JButton btnResponsavel = new JButton("Cadastrar Responsável");
+        JButton btnFechar = new JButton("Fechar");
+
+        btnProfessor.addActionListener(e -> new CadastroFrame(new CadastroProfessorPanel(null)));
+        btnResponsavel.addActionListener(e -> new CadastroFrame(new CadastroResponsavelPanel(null)));
+        btnFechar.addActionListener(e -> frame.dispose());
+
+        frame.add(btnProfessor);
+        frame.add(btnResponsavel);
+        frame.add(btnFechar);
+
+        frame.setVisible(true);
     }
 
     // Método main para teste

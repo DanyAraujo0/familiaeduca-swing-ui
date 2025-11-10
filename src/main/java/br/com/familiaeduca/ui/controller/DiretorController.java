@@ -3,16 +3,16 @@ package br.com.familiaeduca.ui.controller;
 import br.com.familiaeduca.ui.dto.DiretorDto;
 import br.com.familiaeduca.ui.dto.UsuarioDto;
 import br.com.familiaeduca.ui.service.FamiliaEducaApiClient;
-import br.com.familiaeduca.ui.view.login.CadastroDiretorPanel;
+import br.com.familiaeduca.ui.view.usuario.CadastroDiretorPanel;
 
 import javax.swing.*;
 
-public class CadastroDiretorController {
+public class DiretorController {
 
     private final CadastroDiretorPanel view;
     private final FamiliaEducaApiClient apiClient;
 
-    public CadastroDiretorController(CadastroDiretorPanel view) {
+    public DiretorController(CadastroDiretorPanel view) {
         this.view = view;
         this.apiClient = new FamiliaEducaApiClient();
     }
