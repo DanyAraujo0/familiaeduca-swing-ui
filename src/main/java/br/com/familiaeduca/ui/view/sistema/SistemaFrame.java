@@ -104,7 +104,6 @@ public class SistemaFrame extends JFrame {
 
         if (user == null || user.isDiretor()) {
             adicionarSeparadorMenu("ADMINISTRAÇÃO");
-
             JButton btnCadastroProfessor = criarBotaoMenu("Cadastrar Professor");
             btnCadastroProfessor.addActionListener(e -> new CadastroFrame(new CadastroProfessorPanel(null)));
             sideMenu.add(btnCadastroProfessor);

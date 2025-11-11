@@ -18,7 +18,6 @@ public class UiConstants {
         b.setFont(new Font("Segoe UI", Font.BOLD, 13));
         b.setFocusPainted(false);
         b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        // Se estiver usando FlatLaf, isso ajuda a deixá-lo mais arredondado se quiser
         b.putClientProperty("JButton.buttonType", "roundRect");
     }
 
@@ -32,26 +31,25 @@ public class UiConstants {
 
     // --- Tabelas (JTable) ---
     public static void styleTable(JTable table) {
-        table.setRowHeight(30); // Linhas mais altas e legíveis
+        table.setRowHeight(30);
         table.setFont(FONT_REGULAR);
-        table.setSelectionBackground(new Color(200, 220, 255)); // Azul claro na seleção
+        table.setSelectionBackground(new Color(200, 220, 255));
         table.setSelectionForeground(Color.BLACK);
         table.setGridColor(new Color(230, 230, 230));
-        table.setShowVerticalLines(false); // Visual mais limpo
+        table.setShowVerticalLines(false);
 
         // Cabeçalho da tabela
         JTableHeader header = table.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 13));
         header.setBackground(Color.WHITE);
         header.setForeground(BLUE);
-        header.setPreferredSize(new Dimension(0, 35)); // Cabeçalho mais alto
+        header.setPreferredSize(new Dimension(0, 35));
     }
 
     // --- Campos de Texto e Combos ---
     public static void styleField(JComponent field) {
         field.setFont(FONT_REGULAR);
-        field.setPreferredSize(new Dimension(field.getPreferredSize().width, 35)); // Altura padrão boa
-        // FlatLaf já dá um visual bom, mas podemos forçar bordas arredondadas extras:
+        field.setPreferredSize(new Dimension(field.getPreferredSize().width, 35));
         field.putClientProperty("JComponent.roundRect", true);
     }
 }

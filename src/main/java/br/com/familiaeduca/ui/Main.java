@@ -2,7 +2,7 @@ package br.com.familiaeduca.ui;
 
 import br.com.familiaeduca.ui.view.login.LoginFrame;
 import br.com.familiaeduca.ui.util.UiTheme;
-import com.formdev.flatlaf.FlatLightLaf; // Importe o FlatLaf
+import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 

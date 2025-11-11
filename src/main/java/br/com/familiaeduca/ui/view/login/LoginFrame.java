@@ -2,7 +2,6 @@ package br.com.familiaeduca.ui.view.login;
 
 import javax.swing.*;
 import java.awt.*;
-
 import br.com.familiaeduca.ui.view.usuario.CadastroDiretorPanel;
 
 public class LoginFrame extends JFrame {
@@ -36,8 +35,4 @@ public class LoginFrame extends JFrame {
         revalidate();
         repaint();
     }
-/* // Testando individualmente
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
-    }*/
 }

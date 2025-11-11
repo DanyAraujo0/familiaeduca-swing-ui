@@ -33,32 +33,25 @@ public class FamiliaEducaApiClient {
     // =================================================================================
     // LOGIN
     // =================================================================================
+    // TAVA FUNCIONANDO MAS PRECISA DE AUTENTICAÇÃO
+        public TokenDto fazerLogin(String email, String senha) throws Exception {
+            String jsonBody = gson.toJson(new LoginDto(email, senha));
 
-    /**
-     * Faz login de Diretor, Professor ou Responsável.
-     * O tipo de usuário é inferido automaticamente pelo endpoint.
-     */
-    public TokenDto fazerLogin(String email, String senha) throws Exception {
-        String jsonBody = gson.toJson(new LoginDto(email, senha));
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL + "/usuarios"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                    .build();
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/login"))
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
-                .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        if (response.statusCode() == 200) {
-            // Exemplo de resposta esperada do backend:
-            // { "token": "jwt...", "tipo": "diretor" }
-            TokenDto tokenDto = gson.fromJson(response.body(), TokenDto.class);
-            return tokenDto;
-        } else {
-            throw new RuntimeException("Falha no login: " + response.statusCode() + " - " + response.body());
+            if (response.statusCode() == 200) {
+                TokenDto tokenDto = gson.fromJson(response.body(), TokenDto.class);
+                return tokenDto;
+            } else {
+                throw new RuntimeException("Falha no login: " + response.statusCode() + " - " + response.body());
+            }
         }
-    }
-
     // =================================================================================
     // DIRETORES
     // =================================================================================
@@ -125,7 +118,7 @@ public class FamiliaEducaApiClient {
     }
 
     // =================================================================================
-    // PERFIL (Se existir endpoint /usuarios/me)
+    // PERFIL
     // =================================================================================
 
     public UsuarioDto getMeuPerfil(String token) throws Exception {

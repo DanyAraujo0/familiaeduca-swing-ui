@@ -17,7 +17,6 @@ public class SessaoUsuario {
         return instancia;
     }
 
-    // Renomeei de 'setSessao' para 'iniciarSessao' para ficar igual ao LoginController
     public void iniciarSessao(UsuarioDto usuario, TokenDto tokenDto) {
         this.usuarioLogado = usuario;
         this.token = tokenDto;
@@ -25,10 +24,8 @@ public class SessaoUsuario {
 
     public UsuarioDto getUsuarioLogado() { return usuarioLogado; }
 
-    // Corrigido para usar .token() porque TokenDto é um Record
     public String getToken() { return token != null ? token.token() : null; }
 
-    // --- Novos métodos de verificação baseados no UsuarioDto ---
     public boolean isProfessor() {
         return usuarioLogado != null && usuarioLogado.isProfessor();
     }

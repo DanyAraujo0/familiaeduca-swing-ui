@@ -5,24 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58f4935f-6afb-41e6-9d32-25f18d99e26b" name="Changes" comment="add tela login">
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/DiretorController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/ProfessorController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/ResponsavelController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/usuario/CadastroProfessorPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/usuario/CadastroResponsavelPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/CadastroDiretorController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/CadastroUsuariosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/controller/CadastroUsuariosController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/service/FamiliaEducaApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/service/FamiliaEducaApiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/SessaoUsuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/SessaoUsuario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/util/UiConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/CadastroDiretorPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/usuario/CadastroDiretorPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/login/LoginPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/CadastroUsuariosPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/usuario/CadastroUsuariosPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/MatriculaPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/MatriculaPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/sistema/SistemaFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/usuario/TelaCadastroPanel.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/usuario/TelaCadastroPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/familiaeduca/ui/view/usuario/CadastroFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
