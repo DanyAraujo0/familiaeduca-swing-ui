@@ -1,14 +1,14 @@
 package br.com.familiaeduca.ui.service;
 
 import br.com.familiaeduca.ui.dto.*;
+import br.com.familiaeduca.ui.service.exception.*;
 import com.google.gson.*;
-import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.*;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.Map;
 
 public class FamiliaEducaApiClient {
 
@@ -21,42 +21,63 @@ public class FamiliaEducaApiClient {
                 .connectTimeout(Duration.ofSeconds(10))
                 .build();
 
-        // Configura Gson para suportar LocalDate
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>)
-                        (src, typeOfSrc, context) -> new JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE)))
+                        (src, typeOfSrc, ctx) -> new JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE)))
                 .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>)
-                        (json, typeOfT, context) -> LocalDate.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_DATE))
+                        (json, typeOfT, ctx) -> LocalDate.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_DATE))
                 .create();
     }
 
-    // =================================================================================
-    // LOGIN
-    // =================================================================================
-    // TAVA FUNCIONANDO MAS PRECISA DE AUTENTICAÇÃO
-        public TokenDto fazerLogin(String email, String senha) throws Exception {
-            String jsonBody = gson.toJson(new LoginDto(email, senha));
-
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE_URL + "/usuarios"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() == 200) {
-                TokenDto tokenDto = gson.fromJson(response.body(), TokenDto.class);
-                return tokenDto;
-            } else {
-                throw new RuntimeException("Falha no login: " + response.statusCode() + " - " + response.body());
-            }
+    // ============================================================
+    // HELPER — Extrai mensagem do backend
+    // ============================================================
+    private String extractMessage(String json) {
+        try {
+            Map<String, String> map = gson.fromJson(json, Map.class);
+            if (map.containsKey("mensagem")) return map.get("mensagem");
+            if (map.containsKey("message")) return map.get("message");
+            return json;
+        } catch (Exception e) {
+            return json;
         }
-    // =================================================================================
-    // DIRETORES
-    // =================================================================================
+    }
 
+    // ============================================================
+    // LOGIN
+    // ============================================================
+    public UsuarioDto fazerLogin(String email, String senha) throws Exception {
+
+        LoginDto dto = new LoginDto(email, senha);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/usuarios/login"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(dto)))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        int status = response.statusCode();
+
+        if (status == 200) {
+            return gson.fromJson(response.body(), UsuarioDto.class);
+        }
+        else if (status == 401) {
+            throw new ApiUnauthorizedException("Credenciais inválidas.");
+        }
+        else if (status == 400) {
+            throw new ApiBadRequestException(extractMessage(response.body()));
+        }
+        else {
+            throw new ApiServiceException("Erro no login: " + extractMessage(response.body()));
+        }
+    }
+
+    // ============================================================
+    // DIRETOR
+    // ============================================================
     public UsuarioDto cadastrarDiretor(DiretorDto dto) throws Exception {
+
         String jsonBody = gson.toJson(dto);
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -66,91 +87,118 @@ public class FamiliaEducaApiClient {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() == 201 || response.statusCode() == 200) {
+        int status = response.statusCode();
+
+        if (status == 201 || status == 200) {
             return gson.fromJson(response.body(), UsuarioDto.class);
-        } else {
-            throw new RuntimeException("Erro ao cadastrar diretor: " + response.statusCode() + "\n" + response.body());
+        }
+        else if (status == 400) {
+            throw new ApiBadRequestException(extractMessage(response.body()));
+        }
+        else if (status == 409) {
+            throw new ApiBadRequestException("Conflito: " + extractMessage(response.body()));
+        }
+        else {
+            throw new ApiServiceException("Erro ao cadastrar diretor: " + extractMessage(response.body()));
         }
     }
 
-    // =================================================================================
-    // PROFESSORES
-    // =================================================================================
+    // ============================================================
+    // PROFESSOR
+    // ============================================================
+    public UsuarioDto cadastrarProfessor(ProfessorDto dto) throws Exception {
 
-    public UsuarioDto cadastrarProfessor(ProfessorDto dto, String token) throws Exception {
         String jsonBody = gson.toJson(dto);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/professores"))
                 .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + token)
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() == 201 || response.statusCode() == 200) {
+        int status = response.statusCode();
+
+        if (status == 201 || status == 200) {
             return gson.fromJson(response.body(), UsuarioDto.class);
-        } else {
-            throw new RuntimeException("Erro ao cadastrar professor: " + response.statusCode() + "\n" + response.body());
+        }
+        else if (status == 400) {
+            throw new ApiBadRequestException(extractMessage(response.body()));
+        }
+        else {
+            throw new ApiServiceException("Erro ao cadastrar professor: " + extractMessage(response.body()));
         }
     }
 
-    // =================================================================================
-    // RESPONSÁVEIS
-    // =================================================================================
+    // ============================================================
+    // RESPONSÁVEL
+    // ============================================================
+    public UsuarioDto cadastrarResponsavel(ResponsavelDto dto) throws Exception {
 
-    public UsuarioDto cadastrarResponsavel(ResponsavelDto dto, String token) throws Exception {
         String jsonBody = gson.toJson(dto);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/responsaveis"))
                 .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + token)
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() == 201 || response.statusCode() == 200) {
+        int status = response.statusCode();
+
+        if (status == 201 || status == 200) {
             return gson.fromJson(response.body(), UsuarioDto.class);
-        } else {
-            throw new RuntimeException("Erro ao cadastrar responsável: " + response.statusCode() + "\n" + response.body());
+        }
+        else if (status == 400) {
+            throw new ApiBadRequestException(extractMessage(response.body()));
+        }
+        else {
+            throw new ApiServiceException("Erro ao cadastrar responsável: " + extractMessage(response.body()));
         }
     }
 
-    // =================================================================================
+    // ============================================================
     // PERFIL
-    // =================================================================================
+    // ============================================================
+    public UsuarioDto getMeuPerfil() throws Exception {
 
-    public UsuarioDto getMeuPerfil(String token) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/usuarios/me"))
-                .header("Authorization", "Bearer " + token)
                 .GET()
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() == 200) {
+        int status = response.statusCode();
+
+        if (status == 200) {
             return gson.fromJson(response.body(), UsuarioDto.class);
-        } else {
-            throw new RuntimeException("Erro ao buscar perfil: " + response.statusCode() + " - " + response.body());
+        }
+        else if (status == 404) {
+            throw new ApiNotFoundException("Usuário não encontrado.");
+        }
+        else {
+            throw new ApiServiceException("Erro ao buscar perfil: " + extractMessage(response.body()));
         }
     }
 
-    public void addFrequencia(String token, FrequenciaDto dto) throws Exception {
+    // ============================================================
+    // FREQUÊNCIA
+    // ============================================================
+    public void addFrequencia(FrequenciaDto dto) throws Exception {
+
         String jsonBody = gson.toJson(dto);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/frequencias"))
                 .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + token)
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        int status = response.statusCode();
 
-        if (response.statusCode() != 201 && response.statusCode() != 200) {
-            throw new RuntimeException("Erro ao adicionar frequência: " + response.statusCode() + " - " + response.body());
+        if (status != 201 && status != 200) {
+            throw new ApiServiceException("Erro ao adicionar frequência: " + extractMessage(response.body()));
         }
     }
-
 }

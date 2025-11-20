@@ -77,7 +77,7 @@ public class FrequenciaController{
                 FrequenciaDto dto = new FrequenciaDto(matricula, data, presente, turmaId);
 
                 // Chama o backend
-                apiClient.addFrequencia(sessao.getToken(), dto);
+                apiClient.addFrequencia(dto);
 
                 view.exibirMensagem("Presença adicionada com sucesso!");
                // carregarDadosTabela();

@@ -31,8 +31,8 @@ public class ResponsavelController {
             dto.setEndereco(view.getEndereco());
 
             // Pega o token da sessão
-            String token = sessao.getToken();
-
+            //String token = sessao.getToken();
+            /*
             if (token == null) {
                 JOptionPane.showMessageDialog(null,
                         "Sessão expirada. Faça login novamente.",
@@ -40,9 +40,9 @@ public class ResponsavelController {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+*/
             // Envia para API
-            UsuarioDto usuario = apiClient.cadastrarResponsavel(dto, token);
+            UsuarioDto usuario = apiClient.cadastrarResponsavel(dto);
 
             JOptionPane.showMessageDialog(null,
                     "Responsável cadastrado com sucesso: " + usuario.getNome(),

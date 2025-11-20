@@ -1,12 +1,10 @@
 package br.com.familiaeduca.ui.util;
 
-import br.com.familiaeduca.ui.dto.TokenDto;
 import br.com.familiaeduca.ui.dto.UsuarioDto;
 
 public class SessaoUsuario {
     private static SessaoUsuario instancia;
     private UsuarioDto usuarioLogado;
-    private TokenDto token;
 
     private SessaoUsuario() {}
 
@@ -17,14 +15,18 @@ public class SessaoUsuario {
         return instancia;
     }
 
-    public void iniciarSessao(UsuarioDto usuario, TokenDto tokenDto) {
+    public void iniciarSessao(UsuarioDto usuario) {
         this.usuarioLogado = usuario;
-        this.token = tokenDto;
     }
 
-    public UsuarioDto getUsuarioLogado() { return usuarioLogado; }
+    public UsuarioDto getUsuarioLogado() {
+        return usuarioLogado;
+    }
 
-    public String getToken() { return token != null ? token.token() : null; }
+    // Como não existe token no backend, este método pode sempre retornar null:
+    public String getToken() {
+        return null;
+    }
 
     public boolean isProfessor() {
         return usuarioLogado != null && usuarioLogado.isProfessor();
@@ -38,6 +40,5 @@ public class SessaoUsuario {
 
     public void logout() {
         this.usuarioLogado = null;
-        this.token = null;
     }
 }

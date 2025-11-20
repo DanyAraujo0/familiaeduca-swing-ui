@@ -30,7 +30,7 @@ public class ProfessorController {
             dto.setTelefone(view.getTelefone());
 
             // Recupera o token da sessão atual
-            String token = sessao.getToken();
+          /*  String token = sessao.getToken();
 
             if (token == null) {
                 JOptionPane.showMessageDialog(null,
@@ -38,10 +38,10 @@ public class ProfessorController {
                         "Erro de autenticação",
                         JOptionPane.ERROR_MESSAGE);
                 return;
-            }
+            }*/
 
             // Envia a requisição para a API
-            UsuarioDto usuario = apiClient.cadastrarProfessor(dto, token);
+            UsuarioDto usuario = apiClient.cadastrarProfessor(dto);
 
             JOptionPane.showMessageDialog(null,
                     "Professor cadastrado com sucesso: " + usuario.getNome(),

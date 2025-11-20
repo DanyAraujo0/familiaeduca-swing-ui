@@ -1,6 +1,5 @@
 package br.com.familiaeduca.ui.controller;
 
-import br.com.familiaeduca.ui.dto.TokenDto;
 import br.com.familiaeduca.ui.dto.UsuarioDto;
 import br.com.familiaeduca.ui.service.FamiliaEducaApiClient;
 import br.com.familiaeduca.ui.util.SessaoUsuario;
@@ -20,43 +19,31 @@ public class LoginController {
         this.ownerFrame = ownerFrame;
         this.apiClient = new FamiliaEducaApiClient();
     }
-
     public void realizarLogin() {
         try {
-            String usuario = view.getUsuario();
+            String email = view.getUsuario();
             String senha = view.getSenha();
 
-            if (usuario.isEmpty() || senha.isEmpty()) {
-                view.exibirMensagem("Por favor, preencha todos os campos antes de continuar.");
+            if (email.isEmpty() || senha.isEmpty()) {
+                view.exibirMensagem("Preencha todos os campos.");
                 return;
             }
 
-            // 1. Chama a API para obter o Token
-            TokenDto tokenDto = apiClient.fazerLogin(usuario, senha);
+            // backend já retorna UsuarioResponse
+            UsuarioDto usuarioDto = apiClient.fazerLogin(email, senha);
 
-            // 2. Usa o Token para obter os dados do utilizador
-            UsuarioDto usuarioDto = apiClient.getMeuPerfil(tokenDto.token());
+            // salva na sessão
+            SessaoUsuario.getInstance().iniciarSessao(usuarioDto);
 
-            // 3. Salva na sessão global
-            SessaoUsuario.getInstance().iniciarSessao(usuarioDto, tokenDto);
-
-            // 4. Abre a tela principal e fecha a de login
             SwingUtilities.invokeLater(() -> {
-                SistemaFrame sistemaFrame = new SistemaFrame();
-                sistemaFrame.setVisible(true);
-
-                if (ownerFrame != null) {
-                    ownerFrame.dispose();
-                }
+                SistemaFrame frame = new SistemaFrame();
+                frame.setVisible(true);
+                if (ownerFrame != null) ownerFrame.dispose();
             });
 
         } catch (Exception e) {
             e.printStackTrace();
-            String msgErro = "Erro ao conectar. Verifique se o servidor está a correr.";
-            if (e.getMessage() != null && (e.getMessage().contains("403") || e.getMessage().contains("401"))) {
-                msgErro = "Email ou senha incorretos.";
-            }
-            view.exibirMensagem(msgErro);
+            view.exibirMensagem("Email ou senha incorretos.");
         }
     }
 }
