@@ -21,6 +21,57 @@ public class ProfessorController {
     }
 
     public void cadastrar() {
+        // LIMPA ERROS ANTES DE VALIDAR
+        view.limparErros();
+
+        String nome = view.getNome();
+        String email = view.getEmail();
+        String senha = view.getSenha();
+        String telefone = view.getTelefone();
+        // Remove tudo que não for número
+        String telefoneNumerico = telefone.replaceAll("\\D", "");
+
+        boolean temErro = false;
+
+        // ==========================
+        // VALIDAÇÕES
+        // ==========================
+
+        if (nome.isEmpty()) {
+            view.setErroNome("O nome é obrigatório.");
+            temErro = true;
+        } else if (nome.length() < 5) {
+            view.setErroNome("O nome deve ter pelo menos 5 caracteres.");
+            temErro = true;
+        }
+
+        if (email.isEmpty()) {
+            view.setErroEmail("O e-mail é obrigatório.");
+            temErro = true;
+        } else if (!email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+            view.setErroEmail("O e-mail deve ser válido.");
+            temErro = true;
+        }
+
+        if (senha.isEmpty()) {
+            view.setErroSenha("A senha é obrigatória.");
+            temErro = true;
+        } else if (senha.length() < 8 || !senha.matches(".*[A-Za-z].*") || !senha.matches(".*\\d.*")) {
+            view.setErroSenha("A senha deve ter pelo menos 8 caracteres, contendo letras e números.");
+            temErro = true;
+        }
+
+        if (telefoneNumerico.isEmpty()) {
+            view.setErroTelefone("O telefone é obrigatório.");
+            temErro = true;
+        } else if (!telefoneNumerico.matches("^\\d{10,11}$")) {
+            view.setErroTelefone("O telefone deve ter 10 ou 11 dígitos.");
+            temErro = true;
+        }
+
+        // SE ALGUM CAMPO ESTÁ INVALIDO → NÃO CHAMA A API
+        if (temErro) return;
+
         try {
             // Monta o DTO com os dados da tela
             ProfessorDto dto = new ProfessorDto();
@@ -28,17 +79,6 @@ public class ProfessorController {
             dto.setEmail(view.getEmail());
             dto.setSenha(view.getSenha());
             dto.setTelefone(view.getTelefone());
-
-            // Recupera o token da sessão atual
-          /*  String token = sessao.getToken();
-
-            if (token == null) {
-                JOptionPane.showMessageDialog(null,
-                        "Sessão expirada. Faça login novamente.",
-                        "Erro de autenticação",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }*/
 
             // Envia a requisição para a API
             UsuarioDto usuario = apiClient.cadastrarProfessor(dto);

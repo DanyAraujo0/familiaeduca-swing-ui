@@ -16,6 +16,12 @@ public class CadastroResponsavelPanel extends JPanel {
     private JTextField txtEndereco;
     private final CadastroFrame frame;
     private final ResponsavelController controller;
+    // Campos de alerta de erros
+    private JLabel erroNome;
+    private JLabel erroEmail;
+    private JLabel erroSenha;
+    private JLabel erroTelefone;
+    private JLabel erroEndereco;
 
     public CadastroResponsavelPanel(CadastroFrame frame) {
         this.frame = frame;
@@ -69,11 +75,17 @@ public class CadastroResponsavelPanel extends JPanel {
         formPanel.add(lblTitulo);
         formPanel.add(Box.createRigidArea(new Dimension(0, 25)));
 
-        adicionarCampo(formPanel, "Nome Completo:", txtNome);
-        adicionarCampo(formPanel, "E-mail:", txtEmail);
-        adicionarCampo(formPanel, "Senha:", txtSenha);
-        adicionarCampo(formPanel, "Telefone:", txtTelefone);
-        adicionarCampo(formPanel, "Endereço:", txtEndereco);
+        erroNome = new JLabel();
+        erroEmail = new JLabel();
+        erroSenha = new JLabel();
+        erroTelefone = new JLabel();
+        erroEndereco = new JLabel();
+
+        adicionarCampo(formPanel, "Nome Completo:", txtNome, erroNome);
+        adicionarCampo(formPanel, "E-mail:", txtEmail, erroEmail);
+        adicionarCampo(formPanel, "Senha:", txtSenha, erroSenha);
+        adicionarCampo(formPanel, "Telefone:", txtTelefone, erroTelefone);
+        adicionarCampo(formPanel, "Endereço:", txtEndereco, erroEndereco);
 
         formPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         formPanel.add(btnCadastrar);
@@ -96,12 +108,18 @@ public class CadastroResponsavelPanel extends JPanel {
         return txt;
     }
 
-    private void adicionarCampo(JPanel panel, String label, JComponent campo) {
+    private void adicionarCampo(JPanel panel, String label, JComponent campo, JLabel erroLabel) {
         JLabel lbl = new JLabel(label);
         lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        erroLabel.setForeground(Color.RED);
+        erroLabel.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        erroLabel.setVisible(false);
+
         panel.add(lbl);
         panel.add(campo);
-        panel.add(Box.createRigidArea(new Dimension(0, 15)));
+        panel.add(erroLabel);
+        panel.add(Box.createRigidArea(new Dimension(0, 15))); // Espaçamento padrão entre campos
     }
 
     // Getters
@@ -110,4 +128,33 @@ public class CadastroResponsavelPanel extends JPanel {
     public String getSenha() { return new String(txtSenha.getPassword()).trim(); }
     public String getTelefone() { return txtTelefone.getText().trim(); }
     public String getEndereco() { return txtEndereco.getText().trim(); }
+
+    // Setters de erros
+    public void setErroNome(String msg) {
+        erroNome.setText(msg);
+        erroNome.setVisible(msg != null);
+    }
+    public void setErroEmail(String msg) {
+        erroEmail.setText(msg);
+        erroEmail.setVisible(msg != null);
+    }
+    public void setErroSenha(String msg) {
+        erroSenha.setText(msg);
+        erroSenha.setVisible(msg != null);
+    }
+    public void setErroTelefone(String msg) {
+        erroTelefone.setText(msg);
+        erroTelefone.setVisible(msg != null);
+    }
+    public void setErroEndereco(String msg) {
+        erroEndereco.setText(msg);
+        erroEndereco.setVisible(msg != null);
+    }
+    public void limparErros() {
+        setErroNome(null);
+        setErroEmail(null);
+        setErroSenha(null);
+        setErroTelefone(null);
+        setErroEndereco(null);
+    }
 }

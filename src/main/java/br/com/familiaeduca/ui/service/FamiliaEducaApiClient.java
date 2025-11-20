@@ -30,17 +30,26 @@ public class FamiliaEducaApiClient {
     }
 
     // ============================================================
-    // HELPER — Extrai mensagem do backend
+    // Extrai mensagem do backend
     // ============================================================
-    private String extractMessage(String json) {
+    private String extrairMensagemDeErro(String body) {
         try {
-            Map<String, String> map = gson.fromJson(json, Map.class);
-            if (map.containsKey("mensagem")) return map.get("mensagem");
-            if (map.containsKey("message")) return map.get("message");
-            return json;
+            JsonObject json = JsonParser.parseString(body).getAsJsonObject();
+
+            // Caso venha "message": "texto"
+            if (json.has("message")) {
+                return json.get("message").getAsString();
+            }
+
+            // Caso venha apenas o erro genérico do Spring
+            if (json.has("error")) {
+                return json.get("error").getAsString();
+            }
         } catch (Exception e) {
-            return json;
+            return body; // fallback
         }
+
+        return body;
     }
 
     // ============================================================
@@ -66,10 +75,11 @@ public class FamiliaEducaApiClient {
             throw new ApiUnauthorizedException("Credenciais inválidas.");
         }
         else if (status == 400) {
-            throw new ApiBadRequestException(extractMessage(response.body()));
+            throw new ApiBadRequestException("\n Erro ao processar a requisição. Verifique os dados preenchidos.");
         }
         else {
-            throw new ApiServiceException("Erro no login: " + extractMessage(response.body()));
+            String mensagem = extrairMensagemDeErro(response.body());
+            throw new ApiServiceException("Erro no login: " + mensagem);
         }
     }
 
@@ -93,13 +103,14 @@ public class FamiliaEducaApiClient {
             return gson.fromJson(response.body(), UsuarioDto.class);
         }
         else if (status == 400) {
-            throw new ApiBadRequestException(extractMessage(response.body()));
+            throw new ApiBadRequestException("\n Erro ao processar a requisição. Verifique os dados preenchidos.");
         }
         else if (status == 409) {
-            throw new ApiBadRequestException("Conflito: " + extractMessage(response.body()));
+            throw new ApiBadRequestException("\n Erro ao processar a requisição. Verifique os dados preenchidos.");
         }
         else {
-            throw new ApiServiceException("Erro ao cadastrar diretor: " + extractMessage(response.body()));
+            String mensagem = extrairMensagemDeErro(response.body());
+            throw new ApiServiceException("Erro ao cadastrar diretor: " + mensagem);
         }
     }
 
@@ -123,10 +134,11 @@ public class FamiliaEducaApiClient {
             return gson.fromJson(response.body(), UsuarioDto.class);
         }
         else if (status == 400) {
-            throw new ApiBadRequestException(extractMessage(response.body()));
+            throw new ApiBadRequestException("\n\n Erro ao processar a requisição. Verifique os dados preenchidos.");
         }
         else {
-            throw new ApiServiceException("Erro ao cadastrar professor: " + extractMessage(response.body()));
+            String mensagem = extrairMensagemDeErro(response.body());
+            throw new ApiServiceException("Erro ao cadastrar professor: " + mensagem);
         }
     }
 
@@ -150,10 +162,11 @@ public class FamiliaEducaApiClient {
             return gson.fromJson(response.body(), UsuarioDto.class);
         }
         else if (status == 400) {
-            throw new ApiBadRequestException(extractMessage(response.body()));
+            throw new ApiBadRequestException("\n Erro ao processar a requisição. Verifique os dados preenchidos.");
         }
         else {
-            throw new ApiServiceException("Erro ao cadastrar responsável: " + extractMessage(response.body()));
+            String mensagem = extrairMensagemDeErro(response.body());
+            throw new ApiServiceException("Erro ao cadastrar responsável: " + mensagem);
         }
     }
 
@@ -177,7 +190,8 @@ public class FamiliaEducaApiClient {
             throw new ApiNotFoundException("Usuário não encontrado.");
         }
         else {
-            throw new ApiServiceException("Erro ao buscar perfil: " + extractMessage(response.body()));
+            String mensagem = extrairMensagemDeErro(response.body());
+            throw new ApiServiceException("Erro ao buscar perfil: " + mensagem);
         }
     }
 
@@ -198,7 +212,8 @@ public class FamiliaEducaApiClient {
         int status = response.statusCode();
 
         if (status != 201 && status != 200) {
-            throw new ApiServiceException("Erro ao adicionar frequência: " + extractMessage(response.body()));
+            String mensagem = extrairMensagemDeErro(response.body());
+            throw new ApiServiceException("Erro ao adicionar frequência: " + mensagem);
         }
     }
 }

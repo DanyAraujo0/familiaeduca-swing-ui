@@ -21,6 +21,63 @@ public class ResponsavelController {
     }
 
     public void cadastrar() {
+        // LIMPA ERROS ANTES DE VALIDAR
+        view.limparErros();
+
+        String nome = view.getNome();
+        String email = view.getEmail();
+        String senha = view.getSenha();
+        String telefone = view.getTelefone();
+        String Endereco = view.getEndereco();
+        // Remove tudo que não for número
+        String telefoneNumerico = telefone.replaceAll("\\D", "");
+
+        boolean temErro = false;
+
+        // ==========================
+        // VALIDAÇÕES
+        // ==========================
+
+        if (nome.isEmpty()) {
+            view.setErroNome("O nome é obrigatório.");
+            temErro = true;
+        } else if (nome.length() < 5) {
+            view.setErroNome("O nome deve ter pelo menos 5 caracteres.");
+            temErro = true;
+        }
+
+        if (email.isEmpty()) {
+            view.setErroEmail("O e-mail é obrigatório.");
+            temErro = true;
+        } else if (!email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+            view.setErroEmail("O e-mail deve ser válido.");
+            temErro = true;
+        }
+
+        if (senha.isEmpty()) {
+            view.setErroSenha("A senha é obrigatória.");
+            temErro = true;
+        } else if (senha.length() < 8 || !senha.matches(".*[A-Za-z].*") || !senha.matches(".*\\d.*")) {
+            view.setErroSenha("A senha deve ter pelo menos 8 caracteres, contendo letras e números.");
+            temErro = true;
+        }
+
+        if (telefoneNumerico.isEmpty()) {
+            view.setErroTelefone("O telefone é obrigatório.");
+            temErro = true;
+        } else if (!telefoneNumerico.matches("^\\d{10,11}$")) {
+            view.setErroTelefone("O telefone deve ter 10 ou 11 dígitos.");
+            temErro = true;
+        }
+
+        if (Endereco.isEmpty()) {
+            view.setErroEndereco("O Endereço é obrigatório.");
+            temErro = true;
+        }
+
+        // SE ALGUM CAMPO ESTÁ INVALIDO → NÃO CHAMA A API
+        if (temErro) return;
+
         try {
             // Cria DTO com dados da tela
             ResponsavelDto dto = new ResponsavelDto();
@@ -30,17 +87,6 @@ public class ResponsavelController {
             dto.setTelefone(view.getTelefone());
             dto.setEndereco(view.getEndereco());
 
-            // Pega o token da sessão
-            //String token = sessao.getToken();
-            /*
-            if (token == null) {
-                JOptionPane.showMessageDialog(null,
-                        "Sessão expirada. Faça login novamente.",
-                        "Erro de autenticação",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-*/
             // Envia para API
             UsuarioDto usuario = apiClient.cadastrarResponsavel(dto);
 

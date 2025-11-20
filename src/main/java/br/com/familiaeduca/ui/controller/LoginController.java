@@ -20,10 +20,21 @@ public class LoginController {
         this.apiClient = new FamiliaEducaApiClient();
     }
     public void realizarLogin() {
-        try {
-            String email = view.getUsuario();
-            String senha = view.getSenha();
+        view.limparErros(); // limpa mensagens anteriores
 
+        boolean valido = true;
+
+        String email = view.getUsuario();
+        String senha = view.getSenha();
+
+        if (!email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,}$")) {
+            view.setErroEmail("Informe um email válido.");
+            valido = false;
+        }
+
+        if (!valido) return; // não chama API
+
+        try {
             if (email.isEmpty() || senha.isEmpty()) {
                 view.exibirMensagem("Preencha todos os campos.");
                 return;

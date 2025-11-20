@@ -14,6 +14,7 @@ public class LoginPanel extends JPanel {
     private JButton btnEntrar;
     private JButton btnCadastrarDiretor;
     private LoginController controller;
+    private JLabel lblErroEmail;
 
     public LoginPanel(LoginFrame frame) {
         this.controller = new LoginController(this, frame);
@@ -61,6 +62,11 @@ public class LoginPanel extends JPanel {
         txtUsuario.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
         txtUsuario.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        lblErroEmail = new JLabel(" ");
+        lblErroEmail.setForeground(Color.RED);
+        lblErroEmail.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblErroEmail.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         JLabel lblSenha = new JLabel("Senha:");
         lblSenha.setAlignmentX(Component.LEFT_ALIGNMENT);
 
@@ -88,6 +94,7 @@ public class LoginPanel extends JPanel {
 
         formPanel.add(lblUsuario);
         formPanel.add(txtUsuario);
+        formPanel.add(lblErroEmail);
         formPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
         formPanel.add(lblSenha);
@@ -105,8 +112,16 @@ public class LoginPanel extends JPanel {
         btnEntrar.addActionListener(e -> controller.realizarLogin());
         btnCadastrarDiretor.addActionListener(e -> frame.mostrarCadastroDiretorPanel());
     }
-
+    // Getters para a controller
     public String getUsuario() { return txtUsuario.getText().trim(); }
     public String getSenha() { return new String(pwdSenha.getPassword()).trim(); }
     public void exibirMensagem(String msg) { JOptionPane.showMessageDialog(this, msg); }
+
+    // Setters para captura de erros
+    public void setErroEmail(String msg) {
+        lblErroEmail.setText(msg);
+    }
+    public void limparErros() {
+        lblErroEmail.setText(" ");
+    }
 }
