@@ -3,6 +3,7 @@ package br.com.familiaeduca.ui.view.usuario;
 import br.com.familiaeduca.ui.controller.ResponsavelController;
 import br.com.familiaeduca.ui.util.UiConstants;
 import br.com.familiaeduca.ui.util.UiImages;
+import javax.swing.text.MaskFormatter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ public class CadastroResponsavelPanel extends JPanel {
     private JTextField txtNome;
     private JTextField txtEmail;
     private JPasswordField txtSenha;
-    private JTextField txtTelefone;
+    private JFormattedTextField txtTelefone;
     private JTextField txtEndereco;
     private final CadastroFrame frame;
     private final ResponsavelController controller;
@@ -57,7 +58,7 @@ public class CadastroResponsavelPanel extends JPanel {
         txtSenha = new JPasswordField();
         txtSenha.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
         txtSenha.setAlignmentX(Component.LEFT_ALIGNMENT);
-        txtTelefone = criarCampoTexto();
+        txtTelefone = criarCampoTelefone();
         txtEndereco = criarCampoTexto();
 
         JButton btnCadastrar = new JButton("Confirmar Cadastro");
@@ -97,7 +98,9 @@ public class CadastroResponsavelPanel extends JPanel {
 
         // --- Eventos ---
         btnCadastrar.addActionListener(e -> controller.cadastrar());
-        btnVoltar.addActionListener(e -> frame.voltarAoSistema());
+        btnVoltar.addActionListener(e -> {
+            SwingUtilities.getWindowAncestor(this).dispose();
+        });
     }
 
     // Métodos auxiliares
@@ -106,6 +109,20 @@ public class CadastroResponsavelPanel extends JPanel {
         txt.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
         txt.setAlignmentX(Component.LEFT_ALIGNMENT);
         return txt;
+    }
+
+    private JFormattedTextField criarCampoTelefone() {
+        try {
+            MaskFormatter mask = new MaskFormatter("(##) #####-####");
+            mask.setPlaceholderCharacter('_');
+            JFormattedTextField txt = new JFormattedTextField(mask);
+            txt.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
+            txt.setAlignmentX(Component.LEFT_ALIGNMENT);
+            return txt;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JFormattedTextField();
+        }
     }
 
     private void adicionarCampo(JPanel panel, String label, JComponent campo, JLabel erroLabel) {
@@ -126,7 +143,7 @@ public class CadastroResponsavelPanel extends JPanel {
     public String getNome() { return txtNome.getText().trim(); }
     public String getEmail() { return txtEmail.getText().trim(); }
     public String getSenha() { return new String(txtSenha.getPassword()).trim(); }
-    public String getTelefone() { return txtTelefone.getText().trim(); }
+    public String getTelefone() { return txtTelefone.getText().replace("_", "").trim();}
     public String getEndereco() { return txtEndereco.getText().trim(); }
 
     // Setters de erros

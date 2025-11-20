@@ -18,7 +18,7 @@ public class FrequenciaPanel extends JPanel {
     private DefaultTableModel tableModel;
 
     public FrequenciaPanel() {
-        // 1. Configura o layout para receber o painel do .form
+
         setLayout(new BorderLayout());
         if (mainPanel != null) {
             add(mainPanel, BorderLayout.CENTER);
@@ -26,48 +26,61 @@ public class FrequenciaPanel extends JPanel {
             add(new JLabel("Erro: mainPanel não encontrado no .form"), BorderLayout.CENTER);
         }
 
-        // 2. Configura a tabela (se necessário)
         configurarTabela();
 
-        // --- 3. APLICAÇÃO DE ESTILOS (Pós-injeção do .form) ---
-        if (salvarChamadaButton != null) {
+        // Estilos
+        if (salvarChamadaButton != null)
             UiConstants.styleButton(salvarChamadaButton);
-            // salvarChamadaButton.setText("Registrar Frequência"); // Opcional: mudar texto via código
-        }
 
-        if (tblFrequencia != null) {
+        if (tblFrequencia != null)
             UiConstants.styleTable(tblFrequencia);
-        }
 
-        if (cbTurma != null) {
+        if (cbTurma != null)
             UiConstants.styleField(cbTurma);
-        }
 
-        // 4. Inicializa o Controlador
+        // Controller
         this.controller = new FrequenciaController(this);
         this.controller.inicializar();
+
+        // EVENTO: ao trocar a turma, recarregar tabela
+        if (cbTurma != null) {
+            cbTurma.addActionListener(e -> controller.carregarFrequenciaDaTurma());
+        }
     }
 
+    /** CONFIGURA AS COLUNAS DA TABELA */
     private void configurarTabela() {
-        String[] colunas = {"ID", "Aluno", "Data", "Status"};
+        String[] colunas = {"ID", "Matrícula", "Aluno", "Data", "Presente"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
-            public boolean isCellEditable(int row, int column) {
-                return column == 3;
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 4) return Boolean.class; // checkbox
+                return String.class;
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int col) {
+                return col == 4; // só a coluna "Presente" pode ser editada
             }
         };
 
         if (tblFrequencia != null) {
             tblFrequencia.setModel(tableModel);
+            tblFrequencia.setRowHeight(28);
         }
     }
 
-    public JButton getBtnAddPresenca() {
+    /** GETTERS PARA O CONTROLLER */
+    public JButton getBtnSalvarChamada() {
         return salvarChamadaButton;
     }
 
-    public DefaultTableModel getTabelaFrequenciaModel() {
-        return (tblFrequencia != null) ? (DefaultTableModel) tblFrequencia.getModel() : tableModel;
+    public DefaultTableModel getTabelaModel() {
+        return tableModel;
+    }
+
+    public JTable getTabela() {
+        return tblFrequencia;
     }
 
     public String getTurmaSelecionada() {
@@ -77,7 +90,13 @@ public class FrequenciaPanel extends JPanel {
     public void exibirMensagem(String msg) {
         JOptionPane.showMessageDialog(this, msg);
     }
+
     public String perguntar(String msg) {
         return JOptionPane.showInputDialog(this, msg);
+    }
+    public void adicionarTurma(String turma) {
+        if (cbTurma != null) {
+            cbTurma.addItem(turma);
+        }
     }
 }

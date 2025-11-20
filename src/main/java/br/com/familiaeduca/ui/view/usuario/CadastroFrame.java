@@ -17,8 +17,4 @@ public class CadastroFrame extends JFrame {
 
         setVisible(true);
     }
-
-    public void voltarAoSistema() {
-        dispose(); // fecha a tela atual
-    }
 }
