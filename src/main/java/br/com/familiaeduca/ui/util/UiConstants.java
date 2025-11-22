@@ -12,6 +12,8 @@ public class UiConstants {
     public static final Font FONT_BOLD = new Font("Segoe UI", Font.BOLD, 14);
 
     // --- Botões ---
+    public static final Font BUTTON_FONT = new Font("Segoe UI", Font.BOLD, 14);
+
     public static void styleButton(JButton b) {
         b.setBackground(BLUE);
         b.setForeground(Color.WHITE);

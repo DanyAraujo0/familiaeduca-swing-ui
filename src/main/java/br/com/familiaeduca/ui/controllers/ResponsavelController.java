@@ -1,20 +1,20 @@
-package br.com.familiaeduca.ui.controller;
+package br.com.familiaeduca.ui.controllers;
 
-import br.com.familiaeduca.ui.dto.ProfessorDto;
+import br.com.familiaeduca.ui.dto.ResponsavelDto;
 import br.com.familiaeduca.ui.dto.UsuarioDto;
 import br.com.familiaeduca.ui.service.FamiliaEducaApiClient;
 import br.com.familiaeduca.ui.util.SessaoUsuario;
-import br.com.familiaeduca.ui.view.usuario.CadastroProfessorPanel;
+import br.com.familiaeduca.ui.view.usuario.CadastroResponsavelPanel;
 
 import javax.swing.*;
 
-public class ProfessorController {
+public class ResponsavelController {
 
-    private final CadastroProfessorPanel view;
+    private final CadastroResponsavelPanel view;
     private final FamiliaEducaApiClient apiClient;
     private final SessaoUsuario sessao;
 
-    public ProfessorController(CadastroProfessorPanel view) {
+    public ResponsavelController(CadastroResponsavelPanel view) {
         this.view = view;
         this.apiClient = new FamiliaEducaApiClient();
         this.sessao = SessaoUsuario.getInstance();
@@ -28,6 +28,7 @@ public class ProfessorController {
         String email = view.getEmail();
         String senha = view.getSenha();
         String telefone = view.getTelefone();
+        String Endereco = view.getEndereco();
         // Remove tudo que não for número
         String telefoneNumerico = telefone.replaceAll("\\D", "");
 
@@ -69,29 +70,35 @@ public class ProfessorController {
             temErro = true;
         }
 
+        if (Endereco.isEmpty()) {
+            view.setErroEndereco("O Endereço é obrigatório.");
+            temErro = true;
+        }
+
         // SE ALGUM CAMPO ESTÁ INVALIDO → NÃO CHAMA A API
         if (temErro) return;
 
         try {
-            // Monta o DTO com os dados da tela
-            ProfessorDto dto = new ProfessorDto();
+            // Cria DTO com dados da tela
+            ResponsavelDto dto = new ResponsavelDto();
             dto.setNome(view.getNome());
             dto.setEmail(view.getEmail());
             dto.setSenha(view.getSenha());
             dto.setTelefone(view.getTelefone());
+            dto.setEndereco(view.getEndereco());
 
-            // Envia a requisição para a API
-            UsuarioDto usuario = apiClient.cadastrarProfessor(dto);
+            // Envia para API
+            UsuarioDto usuario = apiClient.cadastrarResponsavel(dto);
 
             JOptionPane.showMessageDialog(null,
-                    "Professor cadastrado com sucesso: " + usuario.getNome(),
+                    "Responsável cadastrado com sucesso: " + usuario.getNome(),
                     "Sucesso",
                     JOptionPane.INFORMATION_MESSAGE);
 
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null,
-                    "Erro ao cadastrar professor: " + e.getMessage(),
+                    "Erro ao cadastrar responsável: " + e.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
         }

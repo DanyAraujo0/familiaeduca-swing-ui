@@ -1,4 +1,4 @@
-package br.com.familiaeduca.ui.controller;
+package br.com.familiaeduca.ui.controllers;
 
 import br.com.familiaeduca.ui.util.SessaoUsuario;
 import br.com.familiaeduca.ui.view.usuario.CadastroUsuariosPanel;

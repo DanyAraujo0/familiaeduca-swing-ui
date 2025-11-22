@@ -1,20 +1,23 @@
-package br.com.familiaeduca.ui.controller;
+package br.com.familiaeduca.ui.controllers;
 
-import br.com.familiaeduca.ui.dto.DiretorDto;
+import br.com.familiaeduca.ui.dto.ProfessorDto;
 import br.com.familiaeduca.ui.dto.UsuarioDto;
 import br.com.familiaeduca.ui.service.FamiliaEducaApiClient;
-import br.com.familiaeduca.ui.view.usuario.CadastroDiretorPanel;
+import br.com.familiaeduca.ui.util.SessaoUsuario;
+import br.com.familiaeduca.ui.view.usuario.CadastroProfessorPanel;
 
 import javax.swing.*;
 
-public class DiretorController {
+public class ProfessorController {
 
-    private final CadastroDiretorPanel view;
+    private final CadastroProfessorPanel view;
     private final FamiliaEducaApiClient apiClient;
+    private final SessaoUsuario sessao;
 
-    public DiretorController(CadastroDiretorPanel view) {
+    public ProfessorController(CadastroProfessorPanel view) {
         this.view = view;
         this.apiClient = new FamiliaEducaApiClient();
+        this.sessao = SessaoUsuario.getInstance();
     }
 
     public void cadastrar() {
@@ -70,21 +73,25 @@ public class DiretorController {
         if (temErro) return;
 
         try {
-            DiretorDto dto = new DiretorDto();
+            // Monta o DTO com os dados da tela
+            ProfessorDto dto = new ProfessorDto();
             dto.setNome(view.getNome());
             dto.setEmail(view.getEmail());
             dto.setSenha(view.getSenha());
             dto.setTelefone(view.getTelefone());
 
-            UsuarioDto usuario = apiClient.cadastrarDiretor(dto);
+            // Envia a requisição para a API
+            UsuarioDto usuario = apiClient.cadastrarProfessor(dto);
+
             JOptionPane.showMessageDialog(null,
-                    "Diretor cadastrado com sucesso: " + usuario.getNome(),
+                    "Professor cadastrado com sucesso: " + usuario.getNome(),
                     "Sucesso",
                     JOptionPane.INFORMATION_MESSAGE);
+
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null,
-                    "Erro ao cadastrar diretor: " + e.getMessage(),
+                    "Erro ao cadastrar professor: " + e.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
         }

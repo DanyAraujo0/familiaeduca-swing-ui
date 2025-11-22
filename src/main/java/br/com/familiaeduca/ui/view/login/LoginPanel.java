@@ -1,6 +1,6 @@
 package br.com.familiaeduca.ui.view.login;
 
-import br.com.familiaeduca.ui.controller.LoginController;
+import br.com.familiaeduca.ui.controllers.LoginController;
 import br.com.familiaeduca.ui.util.UiConstants;
 import br.com.familiaeduca.ui.util.UiImages;
 

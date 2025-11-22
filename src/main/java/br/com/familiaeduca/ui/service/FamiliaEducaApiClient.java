@@ -199,21 +199,18 @@ public class FamiliaEducaApiClient {
     // FREQUÊNCIA
     // ============================================================
     public void addFrequencia(FrequenciaDto dto) throws Exception {
-        String endpoint = baseUrl + "/frequencias";
-
-        String json = objectMapper.writeValueAsString(dto);
+        String endpoint = BASE_URL + "/frequencias";
+        String json = gson.toJson(dto);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(endpoint))
                 .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + SessaoUsuario.getInstance().getToken())
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
 
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        if (response.statusCode() != 201) {
-            throw new Exception("Erro ao registrar frequência: " + response.body());
-        }
+        if (response.statusCode() != 201)
+            throw new ApiServiceException("Erro ao registrar frequência: " + extrairMensagemDeErro(response.body()));
     }
 }

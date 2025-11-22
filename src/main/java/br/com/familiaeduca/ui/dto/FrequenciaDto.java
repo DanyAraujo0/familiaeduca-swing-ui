@@ -10,14 +10,19 @@ public class FrequenciaDto {
     private UUID idTurma;
     private UUID idProfessor;
 
-    public FrequenciaDto(LocalDate data, Boolean presente, Integer matriculaAluno, UUID idTurma, UUID idProfessor) {
-        this.data = data;
-        this.presente = presente;
-        this.matriculaAluno = matriculaAluno;
-        this.idTurma = idTurma;
-        this.idProfessor = idProfessor;
-    }
-
     // getters e setters
+    public LocalDate getData() { return data; }
+    public void setData(LocalDate data) { this.data = data; }
 
+    public Boolean getPresenca() { return presente; }
+    public void setPresenca(Boolean presente) { this.presente = presente; }
+
+    public Integer getMatricula() { return matriculaAluno; }
+    public void setMatricula(Integer matriculaAluno) { this.matriculaAluno = matriculaAluno; }
+
+    public UUID getIdTurma() { return idTurma; }
+    public void setIdTurma(UUID idTurma) { this.idTurma = idTurma; }
+
+    public UUID getIdProfessor() { return idProfessor; }
+    public void setIdProfessor(UUID idProfessor) { this.idProfessor = idProfessor; }
 }

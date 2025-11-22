@@ -1,4 +1,4 @@
-package br.com.familiaeduca.ui.controller;
+package br.com.familiaeduca.ui.controllers;
 
 import br.com.familiaeduca.ui.dto.UsuarioDto;
 import br.com.familiaeduca.ui.service.FamiliaEducaApiClient;

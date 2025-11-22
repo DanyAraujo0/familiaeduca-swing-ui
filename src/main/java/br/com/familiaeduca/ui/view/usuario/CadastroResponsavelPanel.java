@@ -1,6 +1,6 @@
 package br.com.familiaeduca.ui.view.usuario;
 
-import br.com.familiaeduca.ui.controller.ResponsavelController;
+import br.com.familiaeduca.ui.controllers.ResponsavelController;
 import br.com.familiaeduca.ui.util.UiConstants;
 import br.com.familiaeduca.ui.util.UiImages;
 import javax.swing.text.MaskFormatter;
