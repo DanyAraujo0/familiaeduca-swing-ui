@@ -434,4 +434,21 @@ public class FamiliaEducaApiClient {
             throw new ApiServiceException("Erro ao salvar checklist: " + extrairMensagemDeErro(response.body()));
         }
     }
+
+    public ChecklistDto.ChecklistResponse buscarChecklistHoje(Integer matricula) {
+        try {
+            HttpRequest request = getRequestAutenticada("/checklists/professores/aluno/" + matricula + "/hoje")
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                return gson.fromJson(response.body(), ChecklistDto.ChecklistResponse.class);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null; // Retorna null se não tiver checklist ou der erro
+    }
 }

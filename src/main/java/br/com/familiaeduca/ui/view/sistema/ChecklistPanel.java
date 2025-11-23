@@ -89,4 +89,5 @@ public class ChecklistPanel extends JPanel {
     public JComboBox<Object> getCbAlunoChecklist() { return cbAlunoChecklist; }
     public DefaultTableModel getTabelaModel() { return tableModel; }
     public JButton getBtnSalvarChecklist() { return btnSalvarChecklist; }
+    public JTable getTblChecklist() { return tblChecklist; }
 }

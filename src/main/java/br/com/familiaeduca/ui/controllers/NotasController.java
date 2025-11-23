@@ -57,17 +57,16 @@ public class NotasController {
             }
         } catch (Exception e) { e.printStackTrace(); }
     }
-
+    // Adicão de dados fakes pois ainda não possui endpoint para disciplinas em nosso back
     private void carregarDisciplinasFixas() {
-        // Como é fake, o ID não importa mais, pode ser qualquer coisa
-        view.getCbDisciplina().addItem(new ComboBoxItem("Matemática", "fake-id-1"));
-        view.getCbDisciplina().addItem(new ComboBoxItem("Português", "fake-id-2"));
-        view.getCbDisciplina().addItem(new ComboBoxItem("História", "fake-id-3"));
-        view.getCbDisciplina().addItem(new ComboBoxItem("Geografia", "fake-id-4"));
+        view.getCbDisciplina().addItem(new ComboBoxItem("O Eu, o Outro e o Nós", "fake-id-1"));
+        view.getCbDisciplina().addItem(new ComboBoxItem("Corpo, Gestos e Movimentos", "fake-id-2"));
+        view.getCbDisciplina().addItem(new ComboBoxItem("Traços, Sons, Cores e Formas", "fake-id-3"));
+        view.getCbDisciplina().addItem(new ComboBoxItem("Escuta, Fala, Pensamento e Imaginação", "fake-id-4"));
+        view.getCbDisciplina().addItem(new ComboBoxItem("Espaços, Tempos, Quantidades, Relações e Transformações", "fake-id-5"));
     }
 
     private void buscarBoletimDoAluno() {
-        // Mantivemos apenas para não quebrar o fluxo visual, mas o resultado não impede o salvamento fake
         idBoletimAtual = null;
         try {
             ComboBoxItem alunoSel = (ComboBoxItem) view.getCbAlunoNotas().getSelectedItem();
