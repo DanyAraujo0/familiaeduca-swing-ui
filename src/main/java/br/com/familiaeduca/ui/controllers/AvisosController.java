@@ -34,7 +34,6 @@ public class AvisosController {
 
         // Configura o botão Atualizar
         view.getBtnAtualizar().addActionListener(e -> {
-            System.out.("Botão Atualizar Clicado!");
             carregarAvisos();
         });
 
@@ -46,12 +45,10 @@ public class AvisosController {
     }
 
     private void carregarAvisos() {
-        System.out.("Controller: Chamando carregarAvisos()...");
         try {
             view.getTabelaModel().setRowCount(0); // Limpa a tabela
 
             AvisoDto.AvisoResponse[] avisos = apiClient.listarAvisos();
-            System.out.("Controller: Avisos recebidos: " + avisos.length);
 
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 

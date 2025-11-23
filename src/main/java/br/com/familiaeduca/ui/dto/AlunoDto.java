@@ -13,7 +13,29 @@ public class AlunoDto {
             String alergias,
             TurmaResumeDto turma,
             ResponsavelResumeDto responsavel
-    ) {}
+    ) {
+        public Integer getMatricula() {
+            return matricula;
+        }
+        public String getNome() {
+            return nome;
+        }
+        public LocalDate getDataNascimento() {
+            return dataNascimento;
+        }
+        public String getLaudo() {
+            return laudo;
+        }
+        public String getAlergias() {
+            return alergias;
+        }
+        public TurmaResumeDto getTurma() {
+            return turma;
+        }
+        public ResponsavelResumeDto getResponsavel() {
+            return responsavel;
+        }
+    }
 
     public record TurmaResumeDto(
             UUID id,

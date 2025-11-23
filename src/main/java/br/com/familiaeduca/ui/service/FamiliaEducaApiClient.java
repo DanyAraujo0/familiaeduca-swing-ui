@@ -213,8 +213,8 @@ public class FamiliaEducaApiClient {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         // Teste para saber se a comunicação esta bem sucedida
-        System.out.println("STATUS AVISO = " + response.statusCode());
-        System.out.println("BODY AVISO = " + response.body());
+        //System.out.println("STATUS AVISO = " + response.statusCode());
+        //System.out.println("BODY AVISO = " + response.body());
         if (response.statusCode() == 200) {
             return gson.fromJson(response.body(), UsuarioDto.class);
         }
@@ -315,8 +315,39 @@ public class FamiliaEducaApiClient {
     }
 
     // ============================================================
-    // NOTA
+    // NOTAS E BOLETINS
     // ============================================================
+
+    public DisciplinaDto[] listarDisciplinas() throws Exception {
+        try {
+            HttpRequest request = getRequestAutenticada("/disciplinas").GET().build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if(response.statusCode() == 200) return gson.fromJson(response.body(), DisciplinaDto[].class);
+        } catch(Exception e) { /* ignora */ }
+        return new DisciplinaDto[0];
+    }
+
+    public BoletimDto.BoletimResponse[] buscarBoletinsDoAluno(int matricula) throws Exception {
+        HttpRequest request = getRequestAutenticada("/boletins/aluno/" + matricula).GET().build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            return gson.fromJson(response.body(), BoletimDto.BoletimResponse[].class);
+        }
+        return new BoletimDto.BoletimResponse[0];
+    }
+
+    public void criarNota(NotaDto.CreateNotaRequest req) throws Exception {
+        String jsonBody = gson.toJson(req);
+        HttpRequest request = getRequestAutenticada("/notas")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 201 && response.statusCode() != 200) {
+            throw new ApiServiceException("Erro ao lançar nota: " + extrairMensagemDeErro(response.body()));
+        }
+    }
 
     // ============================================================
     // AVISOS
@@ -354,8 +385,53 @@ public class FamiliaEducaApiClient {
     // ============================================================
     // REUNIÕES
     // ============================================================
+    public ReuniaoDto.ReuniaoResponse[] listarReunioes() throws Exception {
+        HttpRequest request = getRequestAutenticada("/reunioes").GET().build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 200) return gson.fromJson(response.body(), ReuniaoDto.ReuniaoResponse[].class);
+        return new ReuniaoDto.ReuniaoResponse[0];
+    }
+
+    public ReuniaoDto.ReuniaoResponse[] listarReunioesPorResponsavel(String idResponsavel) throws Exception {
+        HttpRequest request = getRequestAutenticada("/reunioes/responsavel/" + idResponsavel)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            return gson.fromJson(response.body(), ReuniaoDto.ReuniaoResponse[].class);
+        }
+        return new ReuniaoDto.ReuniaoResponse[0];
+    }
+
+    public void criarReuniao(ReuniaoDto.CreateReuniaoRequest req) throws Exception {
+        String jsonBody = gson.toJson(req);
+        HttpRequest request = getRequestAutenticada("/reunioes")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 201 && response.statusCode() != 200) {
+            throw new ApiServiceException("Erro ao agendar reunião: " + extrairMensagemDeErro(response.body()));
+        }
+    }
 
     // ============================================================
     // CHECKLIST
     // ============================================================
+    public void criarChecklistProfessor(ChecklistDto.CreateChecklistProfessorRequest req) throws Exception {
+        String jsonBody = gson.toJson(req);
+
+        HttpRequest request = getRequestAutenticada("/checklists/professores")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 201 && response.statusCode() != 200) {
+            throw new ApiServiceException("Erro ao salvar checklist: " + extrairMensagemDeErro(response.body()));
+        }
+    }
 }

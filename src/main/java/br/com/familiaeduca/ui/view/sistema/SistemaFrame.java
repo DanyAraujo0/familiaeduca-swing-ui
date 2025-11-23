@@ -32,31 +32,30 @@ public class SistemaFrame extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // --- 1. Painel de Conteúdo (CENTRO) ---
+        // --- Painel de Conteúdo (CENTRO) ---
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
         contentPanel.setBackground(new Color(245, 248, 250));
         add(contentPanel, BorderLayout.CENTER);
 
-        // --- 2. Menu Lateral (ESQUERDA) ---
+        // --- Menu Lateral (ESQUERDA) ---
         sideMenu = new JPanel();
         sideMenu.setLayout(new BoxLayout(sideMenu, BoxLayout.Y_AXIS));
         sideMenu.setBackground(UiConstants.BLUE);
-        sideMenu.setPreferredSize(new Dimension(250, 0)); // Um pouco mais largo para a logo
+        sideMenu.setPreferredSize(new Dimension(250, 0));
         sideMenu.setBorder(new EmptyBorder(20, 20, 20, 20));
         add(sideMenu, BorderLayout.WEST);
 
-        // --- Logo Branca no Menu ---
-        URL logoUrl = getClass().getResource(UiImages.WHITE_LOGO);
+        // --- Logo Preta no Menu ---
+        URL logoUrl = getClass().getResource(UiImages.LOGO);
         if (logoUrl != null) {
             ImageIcon logoIcon = new ImageIcon(logoUrl);
-            // Redimensiona a logo se for muito grande para o menu
-            Image img = logoIcon.getImage().getScaledInstance(180, -1, Image.SCALE_SMOOTH);
+            Image img = logoIcon.getImage().getScaledInstance(200, -1, Image.SCALE_SMOOTH);
+
             JLabel lblLogo = new JLabel(new ImageIcon(img));
             lblLogo.setAlignmentX(Component.LEFT_ALIGNMENT);
             sideMenu.add(lblLogo);
         } else {
-            // Fallback se a imagem não for encontrada
             JLabel lblLogoTexto = new JLabel("Família Educa");
             lblLogoTexto.setFont(new Font("Segoe UI", Font.BOLD, 24));
             lblLogoTexto.setForeground(Color.WHITE);
@@ -87,18 +86,16 @@ public class SistemaFrame extends JFrame {
 
         sideMenu.add(Box.createRigidArea(new Dimension(0, 40)));
 
-        // --- 3. Adicionando as Telas ao Menu ---
-        // Adiciona TODAS as opções para teste, mas na versão final use os 'if' de perfil
+        // --- Adicionando as Telas ao Menu ---
         adicionarOpcaoMenu("Mural de Avisos", new AvisosPanel(), true);
         adicionarOpcaoMenu("Checklist Diário", new ChecklistPanel(), false);
         adicionarOpcaoMenu("Reuniões", new ReunioesPanel(), false);
 
-        adicionarSeparadorMenu("GESTÃO ACADÊMICA");
-        adicionarOpcaoMenu("Frequência", new FrequenciaPanel(), false);
-        adicionarOpcaoMenu("Notas e Avaliações", new NotasPanel(), false);
-
         // Verifica permissões reais para Matrícula e Cadastro (para não quebrar a lógica de negócio)
         if (user == null || user.isProfessor() || user.isDiretor()) {
+            adicionarSeparadorMenu("GESTÃO ACADÊMICA");
+            adicionarOpcaoMenu("Frequência", new FrequenciaPanel(), false);
+            adicionarOpcaoMenu("Notas e Avaliações", new NotasPanel(), false);
             adicionarOpcaoMenu("Painel de Matrículas", new MatriculaPanel(), false);
         }
 
@@ -123,9 +120,6 @@ public class SistemaFrame extends JFrame {
         btnSair.addActionListener(e -> fazerLogout());
         sideMenu.add(btnSair);
     }
-
-    // ... (manter os métodos auxiliares adicionarOpcaoMenu, criarBotaoMenu, etc. iguais ao anterior) ...
-    // Vou repeti-los aqui para garantir que o arquivo fica completo e funcional
 
     private void adicionarOpcaoMenu(String titulo, JPanel panel, boolean isDefault) {
         contentPanel.add(panel, titulo);
@@ -152,7 +146,7 @@ public class SistemaFrame extends JFrame {
         JButton btn = new JButton(texto);
         btn.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         btn.setForeground(Color.WHITE);
-        btn.setBackground(new Color(0x00, 0x44, 0x88)); // Azul ligeiramente diferente para os botões
+        btn.setBackground(new Color(0x00, 0x44, 0x88));
         btn.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 10));
         btn.setHorizontalAlignment(SwingConstants.LEFT);
         btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
@@ -171,7 +165,6 @@ public class SistemaFrame extends JFrame {
         }
     }
     private void abrirJanelaCadastroUsuarios() {
-        // Aqui criamos uma janela principal de cadastro (com abas ou menus)
         JFrame frame = new JFrame("Família Educa - Cadastros");
         frame.setSize(400, 300);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -192,11 +185,4 @@ public class SistemaFrame extends JFrame {
 
         frame.setVisible(true);
     }
-
-    // Método main para teste
-    public static void main(String[] args) {
-        try { com.formdev.flatlaf.FlatLightLaf.setup(); } catch (Exception e) { }
-        SwingUtilities.invokeLater(() -> new SistemaFrame().setVisible(true));
-    }
-
 }

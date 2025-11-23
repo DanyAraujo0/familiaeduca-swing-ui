@@ -1,46 +1,62 @@
 package br.com.familiaeduca.ui.view.sistema;
 
+import br.com.familiaeduca.ui.controllers.ReunioesController;
 import br.com.familiaeduca.ui.util.UiConstants;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class ReunioesPanel extends JPanel {
 
     private JTable tblReunioes;
-    private JButton btnAceitarReuniao;
     private JButton btnSolicitarReuniao;
-    private JPanel mainPanel;
+    private JButton btnAtualizar;
+    private DefaultTableModel tableModel;
 
-    // private ReunioesController controller;
+    private ReunioesController controller;
 
     public ReunioesPanel() {
-        // 2. Configura o layout deste painel para BorderLayout
         setLayout(new BorderLayout());
+        inicializarComponentes();
+        construirLayout();
 
-        if (mainPanel != null) {
-            add(mainPanel, BorderLayout.CENTER);
-        } else {
-            // Fallback caso algo dê errado na configuração do IDE
-            add(new JLabel("Erro: Não foi possível carregar o design do .form"), BorderLayout.CENTER);
-        }
-
-        if (btnAceitarReuniao != null) {
-            UiConstants.styleButton(btnAceitarReuniao);
-        }
-        if (btnSolicitarReuniao != null) {
-            UiConstants.styleButton(btnSolicitarReuniao);
-        }
-        if (tblReunioes != null) {
-            UiConstants.styleTable(tblReunioes);
-        }
-        // 4. Inicializa o controlador (depois que os componentes já existem)
-        // this.controller = new ReunioesController(this);
-        // this.controller.inicializar(); // Se tiver esse método
+        this.controller = new ReunioesController(this);
+        this.controller.inicializar();
     }
 
-    // Getters para o controlador usar
+    private void inicializarComponentes() {
+        btnSolicitarReuniao = new JButton("Agendar Reunião (+)");
+        btnAtualizar = new JButton("Atualizar Lista");
+
+        tblReunioes = new JTable();
+        tableModel = new DefaultTableModel(new Object[]{"Data", "Motivo", "Responsável", "Status"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) { return false; }
+        };
+        tblReunioes.setModel(tableModel);
+        tblReunioes.setRowHeight(30);
+        tblReunioes.setFillsViewportHeight(true);
+
+        UiConstants.styleButton(btnSolicitarReuniao);
+        UiConstants.styleTable(tblReunioes);
+    }
+
+    private void construirLayout() {
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        topPanel.add(btnAtualizar);
+        topPanel.add(btnSolicitarReuniao);
+
+        JScrollPane scroll = new JScrollPane(tblReunioes);
+        scroll.setBorder(BorderFactory.createTitledBorder("Agenda de Reuniões"));
+
+        add(topPanel, BorderLayout.NORTH);
+        add(scroll, BorderLayout.CENTER);
+    }
+
+    // Getters
     public JTable getTblReunioes() { return tblReunioes; }
-    public JButton getBtnAceitarReuniao() { return btnAceitarReuniao; }
+    public DefaultTableModel getTabelaModel() { return tableModel; }
     public JButton getBtnSolicitarReuniao() { return btnSolicitarReuniao; }
+    public JButton getBtnAtualizar() { return btnAtualizar; }
 }
