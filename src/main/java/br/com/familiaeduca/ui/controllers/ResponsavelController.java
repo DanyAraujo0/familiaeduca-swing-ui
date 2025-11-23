@@ -80,15 +80,15 @@ public class ResponsavelController {
 
         try {
             // Cria DTO com dados da tela
-            ResponsavelDto dto = new ResponsavelDto();
-            dto.setNome(view.getNome());
-            dto.setEmail(view.getEmail());
-            dto.setSenha(view.getSenha());
-            dto.setTelefone(view.getTelefone());
-            dto.setEndereco(view.getEndereco());
+            ResponsavelDto.CreateResponsavelRequest req = new ResponsavelDto.CreateResponsavelRequest();
+            req.setNome(view.getNome());
+            req.setEmail(view.getEmail());
+            req.setSenha(view.getSenha());
+            req.setTelefone(view.getTelefone());
+            req.setEndereco(view.getEndereco());
 
             // Envia para API
-            UsuarioDto usuario = apiClient.cadastrarResponsavel(dto);
+            UsuarioDto usuario = apiClient.cadastrarResponsavel(req);
 
             JOptionPane.showMessageDialog(null,
                     "Responsável cadastrado com sucesso: " + usuario.getNome(),

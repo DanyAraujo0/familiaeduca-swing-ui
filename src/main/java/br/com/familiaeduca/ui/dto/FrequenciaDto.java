@@ -14,11 +14,11 @@ public class FrequenciaDto {
     public LocalDate getData() { return data; }
     public void setData(LocalDate data) { this.data = data; }
 
-    public Boolean getPresenca() { return presente; }
-    public void setPresenca(Boolean presente) { this.presente = presente; }
+    public Boolean getPresente() { return presente; }
+    public void setPresente(Boolean presente) { this.presente = presente; }
 
-    public Integer getMatricula() { return matriculaAluno; }
-    public void setMatricula(Integer matriculaAluno) { this.matriculaAluno = matriculaAluno; }
+    public Integer getMatriculaAluno() { return matriculaAluno; }
+    public void setMatriculaAluno(Integer matriculaAluno) { this.matriculaAluno = matriculaAluno; }
 
     public UUID getIdTurma() { return idTurma; }
     public void setIdTurma(UUID idTurma) { this.idTurma = idTurma; }

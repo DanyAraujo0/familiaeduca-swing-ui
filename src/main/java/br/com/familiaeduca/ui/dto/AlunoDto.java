@@ -5,7 +5,6 @@ import java.util.UUID;
 
 public class AlunoDto {
 
-    // DTO Principal para resposta da API
     public record AlunoResponse(
             Integer matricula,
             String nome,

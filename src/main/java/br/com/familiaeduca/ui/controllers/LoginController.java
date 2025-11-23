@@ -44,7 +44,7 @@ public class LoginController {
             UsuarioDto usuarioDto = apiClient.fazerLogin(email, senha);
 
             // salva na sessão
-            SessaoUsuario.getInstance().iniciarSessao(usuarioDto);
+            SessaoUsuario.getInstance().iniciarSessao(usuarioDto, senha);
 
             SwingUtilities.invokeLater(() -> {
                 SistemaFrame frame = new SistemaFrame();

@@ -5,6 +5,7 @@ import br.com.familiaeduca.ui.dto.UsuarioDto;
 public class SessaoUsuario {
     private static SessaoUsuario instancia;
     private UsuarioDto usuarioLogado;
+    private String senhaUsuario;
 
     private SessaoUsuario() {}
 
@@ -15,13 +16,16 @@ public class SessaoUsuario {
         return instancia;
     }
 
-    public void iniciarSessao(UsuarioDto usuario) {
+    public void iniciarSessao(UsuarioDto usuario, String senha) {
         this.usuarioLogado = usuario;
+        this.senhaUsuario = senha;
     }
 
     public UsuarioDto getUsuarioLogado() {
         return usuarioLogado;
     }
+
+    public String getSenhaUsuario() { return senhaUsuario; }
 
     // Como não existe token no backend, este método pode sempre retornar null:
     public String getToken() {
@@ -40,5 +44,6 @@ public class SessaoUsuario {
 
     public void logout() {
         this.usuarioLogado = null;
+        this.senhaUsuario = null;
     }
 }

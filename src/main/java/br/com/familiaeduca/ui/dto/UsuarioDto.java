@@ -19,10 +19,10 @@ public class UsuarioDto {
     public String getPerfil() { return perfil; }
 
     // Métodos auxiliares (mantidos iguais)
-    public boolean isProfessor() { return "Professor".equalsIgnoreCase(perfil); }
+    public boolean isProfessor() { return "PROFESSOR".equalsIgnoreCase(perfil); }
     // Note que no seu JSON está "Diretor" (singular), ajustei aqui:
-    public boolean isDiretor() { return "Diretor".equalsIgnoreCase(perfil); }
-    public boolean isResponsavel() { return "Responsavel".equalsIgnoreCase(perfil); }
+    public boolean isDiretor() { return "DIRETOR".equalsIgnoreCase(perfil); }
+    public boolean isResponsavel() { return "RESPONSAVEL".equalsIgnoreCase(perfil); }
 
     @Override
     public String toString() {

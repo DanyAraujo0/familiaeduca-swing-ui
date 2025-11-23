@@ -1,17 +1,23 @@
 package br.com.familiaeduca.ui.controllers;
 
+import br.com.familiaeduca.ui.dto.FrequenciaDto;
+import br.com.familiaeduca.ui.dto.TurmaDto;
+import br.com.familiaeduca.ui.service.FamiliaEducaApiClient;
+import br.com.familiaeduca.ui.util.SessaoUsuario;
 import br.com.familiaeduca.ui.view.sistema.FrequenciaPanel;
+
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.UUID;
 
 public class FrequenciaController {
 
     private final FrequenciaPanel view;
+    private final FamiliaEducaApiClient apiClient;
 
     public FrequenciaController(FrequenciaPanel view) {
         this.view = view;
+        this.apiClient = new FamiliaEducaApiClient();
     }
 
     public void inicializar() {
@@ -22,89 +28,107 @@ public class FrequenciaController {
     private void configurarListeners() {
         view.getBtnSalvarChamada().addActionListener(e -> registrarChamada());
 
-        // Listener que detecta a troca de turma
         view.getCbTurma().addActionListener(e -> {
-            String turmaSelecionada = view.getTurmaSelecionada();
-            if (turmaSelecionada != null) {
-                carregarFrequenciaDaTurma(turmaSelecionada);
+            // Agora pegamos o item objeto, não string
+            TurmaItem item = (TurmaItem) view.getCbTurma().getSelectedItem();
+            if (item != null) {
+                carregarFrequenciaDaTurma(item.getId());
             }
         });
     }
 
     private void carregarTurmas() {
-        view.limparTurmas();
-        // Adiciona as turmas disponíveis
-        List<String> turmas = List.of("Turma A", "Turma B", "Turma C");
-        for (String t : turmas) {
-            view.adicionarTurma(t);
+        try {
+            view.limparTurmas();
+            TurmaDto.TurmaResumeResponse[] turmas = apiClient.listarTurmas();
+
+            for (TurmaDto.TurmaResumeResponse t : turmas) {
+                // TRUQUE: Adicionamos o Objeto, não a String
+                view.getCbTurma().addItem(new TurmaItem(t.nome(), UUID.fromString(t.id())));
+            }
+
+            if (turmas.length == 0) {
+                view.exibirMensagem("Nenhuma turma encontrada.");
+            }
+
+        } catch (Exception ex) {
+            view.exibirMensagem("Erro ao carregar turmas: " + ex.getMessage());
         }
-        // Seleciona a primeira para disparar o evento e carregar a tabela
-        if (!turmas.isEmpty()) view.getCbTurma().setSelectedIndex(0);
     }
 
-    /**
-     * CORREÇÃO: Agora verificamos QUAL turma é para carregar alunos diferentes
-     */
-    public void carregarFrequenciaDaTurma(String turma) {
+    public void carregarFrequenciaDaTurma(UUID idTurma) {
         try {
             DefaultTableModel model = view.getTabelaModel();
-            model.setRowCount(0); // Limpa a tabela anterior
+            model.setRowCount(0);
 
-            List<String> alunos = new ArrayList<>();
+            TurmaDto.TurmaResponse turma = apiClient.buscarTurmaPorId(idTurma);
 
-            // Simulação de banco de dados: Alunos diferentes por turma
-            switch (turma) {
-                case "Turma A":
-                    alunos = List.of("Maria", "João", "Pedro", "Ana");
-                    break;
-                case "Turma B":
-                    alunos = List.of("Carlos", "Beatriz", "Fernanda");
-                    break;
-                case "Turma C":
-                    alunos = List.of("Ricardo", "Sofia");
-                    break;
-                default:
-                    alunos = List.of();
+            if (turma.alunos() != null) {
+                for (TurmaDto.AlunoResumeResponse aluno : turma.alunos()) {
+                    model.addRow(new Object[]{
+                            aluno.matricula(),
+                            aluno.nome(),
+                            LocalDate.now().toString(),
+                            false
+                    });
+                }
             }
-
-            int idFicticio = 1;
-            String dataHoje = LocalDate.now().toString();
-
-            for (String nomeAluno : alunos) {
-                model.addRow(new Object[]{
-                        idFicticio,     // ID
-                        nomeAluno,      // Nome
-                        dataHoje,       // Data
-                        false           // Presente? (Começa desmarcado)
-                });
-                idFicticio++;
-            }
-
         } catch (Exception e) {
-            view.exibirMensagem("Erro ao carregar lista: " + e.getMessage());
+            e.printStackTrace();
+            view.exibirMensagem("Erro ao carregar alunos: " + e.getMessage());
         }
     }
 
     public void registrarChamada() {
-        // (Mantenha o código de registrar chamada igual ao anterior)
         try {
             DefaultTableModel model = view.getTabelaModel();
-            int totalPresentes = 0;
+            TurmaItem item = (TurmaItem) view.getCbTurma().getSelectedItem();
 
-            System.out.println("Registrando chamada para: " + view.getTurmaSelecionada());
-
-            for (int i = 0; i < model.getRowCount(); i++) {
-                Boolean isPresente = (Boolean) model.getValueAt(i, 3); // Coluna 3 é o checkbox
-                String nome = (String) model.getValueAt(i, 1);
-
-                if (isPresente != null && isPresente) {
-                    System.out.println("Presente: " + nome);
-                    totalPresentes++;
-                }
+            if (item == null) {
+                view.exibirMensagem("Selecione uma turma.");
+                return;
             }
-            view.exibirMensagem("Chamada salva! Total de presentes: " + totalPresentes);
+
+            int registros = 0;
+            for (int i = 0; i < model.getRowCount(); i++) {
+                Boolean presente = (Boolean) model.getValueAt(i, 3);
+                // Garante que não seja nulo
+                if (presente == null) presente = false;
+
+                Integer matricula = (Integer) model.getValueAt(i, 0);
+
+                FrequenciaDto dto = new FrequenciaDto();
+                dto.setData(LocalDate.now());
+                dto.setPresente(presente);
+                dto.setMatriculaAluno(matricula);
+                dto.setIdTurma(item.getId());
+                dto.setIdProfessor(UUID.fromString(SessaoUsuario.getInstance().getUsuarioLogado().getId()));
+
+                apiClient.registrarFrequencia(dto);
+                registros++;
+            }
+            view.exibirMensagem("Frequência registrada para " + registros + " alunos.");
+
         } catch (Exception e) {
-            view.exibirMensagem("Erro: " + e.getMessage());
+            view.exibirMensagem("Erro ao registrar chamada: " + e.getMessage());
+        }
+    }
+
+    // === CLASSE AUXILIAR PARA O COMBOBOX FICAR BONITO ===
+    public static class TurmaItem {
+        private String nome;
+        private UUID id;
+
+        public TurmaItem(String nome, UUID id) {
+            this.nome = nome;
+            this.id = id;
+        }
+
+        public UUID getId() { return id; }
+
+        @Override
+        public String toString() {
+            return nome; // O ComboBox usa esse método para mostrar o texto
         }
     }
 }
